@@ -21,6 +21,7 @@ const jerseys = [
   {id:18, club:'Napoli', title:'Napoli Home Jersey 25/26', edition:'Fan', league:'Serie A', retro:false, colors:['#12a0d7','#ffffff'], price:850},
   {id:19, club:'Atletico Madrid', title:'Atletico Madrid Home Jersey 25/26', edition:'Fan', league:'La Liga', retro:false, colors:['#ce3524','#ffffff'], price:850},
   {id:20, club:'Tottenham', title:'Tottenham Home Jersey 25/26', edition:'Fan', league:'Premier League', retro:false, colors:['#ffffff','#132257'], price:850},
+  {id:21, club:'Real Madrid', title:'Real Madrid Home Jersey 25/26', edition:'Player', league:'La Liga', retro:false, image:'Images/Madrid2627.png', colors:['#ffffff','#d4af37'], price:1150},
   // Retro
   {id:101, club:'FC Barcelona', title:'Barcelona 2010-11 Iconic Kit', edition:'Retro', league:'La Liga', retro:true, colors:['#a50044','#004d98'], price:1350},
   {id:102, club:'Real Madrid', title:'Real Madrid 2016-17 Classic', edition:'Retro', league:'La Liga', retro:true, colors:['#ffffff','#6c63ff'], price:1350},
@@ -142,7 +143,13 @@ function renderHome() {
         ${jerseys.filter(j => j.retro).slice(0, 3).map(j => `
           <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer relative group" onclick="navigate('product',${j.id})">
             <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">EXCLUSIVE</div>
-            <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">${renderJerseySVG(j.colors,'medium')}</div>
+            <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+          <img
+src="${j.image}"
+alt="${j.title}"
+class="w-full h-full object-contain p-4"
+/>
+            </div>
             <div class="p-5">
               <span class="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-semibold">Retro Classic</span>
               <h3 class="font-semibold mt-2 text-gray-800">${j.title}</h3>
@@ -256,7 +263,12 @@ function renderProduct(id) {
       <button onclick="history.back?navigate('home'):null" class="text-sm text-gray-500 hover:text-royal mb-6 inline-flex items-center gap-1"><i data-lucide="arrow-left" style="width:14px;height:14px"></i> Back</button>
       <div class="grid md:grid-cols-2 gap-10">
         <div class="bg-white rounded-2xl p-8 flex items-center justify-center shadow-sm border border-gray-100 h-96">
-          ${renderJerseySVG(j.colors,'large')}
+          <img
+src="${j.image}"
+alt="${j.title}"
+class="max-w-full
+max-h-full
+object-contain">
         </div>
         <div>
           <span class="text-xs uppercase tracking-wider text-gold font-bold">${j.edition} Edition</span>
