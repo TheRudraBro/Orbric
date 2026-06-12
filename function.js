@@ -184,8 +184,8 @@ class="w-full h-full object-contain p-4"
             return `
             <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
               <div class="relative">
-               <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">
-  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">` : renderJerseySVG(j.colors,'medium')}
+          <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden" onclick="navigate('product',${j.id})">
+  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
 </div>
                 <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">-${discount}%</div>
               </div>
@@ -234,8 +234,8 @@ function renderRetro() {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         ${items.map(j => `
           <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer" onclick="navigate('product',${j.id})">
-           <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">` : renderJerseySVG(j.colors,'medium')}
+        <div class="h-64 w-full flex items-center justify-center bg-gray-50 overflow-hidden cursor-pointer">
+  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
 </div>
             <div class="p-5">
               <span class="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-semibold">Retro Classic</span>
@@ -358,16 +358,17 @@ function renderCart() {
 
 // Helpers
 function renderCard(j) {
-  // Check if image exists, otherwise fallback to SVG
+  // Use object-cover to make the image fill the top completely
   const imageDisplay = j.image 
-    ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">`
+    ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">`
     : renderJerseySVG(j.colors, 'medium');
 
   return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-    <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">
+    <!-- Removed padding (p-4), increased height to h-64, added w-full -->
+    <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden relative" onclick="navigate('product',${j.id})">
       ${imageDisplay}
     </div>
-    <div class="p-4">
+    <div class="p-5">
       <span class="text-[10px] uppercase tracking-wider text-gold font-bold">${j.edition} Edition</span>
       <h3 class="font-semibold text-sm mt-1 text-gray-800 leading-tight cursor-pointer hover:text-royal transition" onclick="navigate('product',${j.id})">${j.title}</h3>
       <p class="text-royal font-bold mt-2">৳${j.price.toLocaleString()}</p>
@@ -375,7 +376,7 @@ function renderCard(j) {
         ${['S','M','L','XL','XXL'].map(s=>`<button onclick="event.stopPropagation();selectCardSize(${j.id},'${s}',this)" class="size-btn text-[10px] w-8 h-6 rounded border border-gray-200 hover:border-royal">${s}</button>`).join('')}
       </div>
       <p id="card-err-${j.id}" class="text-red-500 text-[10px] mt-1 hidden">Please select your jersey size first.</p>
-      <div class="flex gap-2 mt-3">
+      <div class="flex gap-2 mt-4">
         <button onclick="event.stopPropagation();addToCartFromCard(${j.id})" class="btn-primary text-white text-xs px-3 py-2 rounded-lg flex-1 font-medium">Add To Cart</button>
         <button onclick="event.stopPropagation();buyNowCard(${j.id})" class="bg-gold text-white text-xs px-3 py-2 rounded-lg font-medium">Buy Now</button>
       </div>
