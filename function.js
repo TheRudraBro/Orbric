@@ -1,7 +1,18 @@
 
 // Data
 const jerseys = [
-  {id:1, club:'FC Barcelona', title:'FC Barcelona Home Jersey 25/26', edition:'Player', league:'La Liga', retro:false, colors:['#a50044','#004d98'], price:1150},
+  {id:1,
+   club:'FC Barcelona', 
+   title:'FC Barcelona Home Jersey 25/26', 
+   edition:'Player', 
+   league:'La Liga', 
+   retro:false, 
+   colors:['#a50044','#004d98'], 
+   price:1150,
+   image:'Images/Barcelona2526.png'},
+
+ 
+
   {id:2, club:'FC Barcelona', title:'FC Barcelona Away Jersey 25/26', edition:'Fan', league:'La Liga', retro:false, colors:['#004d98','#edbb00'], price:850},
   {id:3, club:'Real Madrid', title:'Real Madrid Home Jersey 25/26', edition:'Player', league:'La Liga', retro:false, colors:['#ffffff','#d4af37'], price:1150},
   {id:4, club:'Real Madrid', title:'Real Madrid Away Jersey 25/26', edition:'Fan', league:'La Liga', retro:false, colors:['#1a1a2e','#d4af37'], price:850},
@@ -173,7 +184,9 @@ class="w-full h-full object-contain p-4"
             return `
             <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
               <div class="relative">
-                <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">${renderJerseySVG(j.colors,'medium')}</div>
+               <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">
+  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">` : renderJerseySVG(j.colors,'medium')}
+</div>
                 <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">-${discount}%</div>
               </div>
               <div class="p-4">
@@ -221,7 +234,9 @@ function renderRetro() {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         ${items.map(j => `
           <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer" onclick="navigate('product',${j.id})">
-            <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">${renderJerseySVG(j.colors,'medium')}</div>
+           <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">` : renderJerseySVG(j.colors,'medium')}
+</div>
             <div class="p-5">
               <span class="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-semibold">Retro Classic</span>
               <h3 class="font-semibold mt-2 text-gray-800">${j.title}</h3>
@@ -343,8 +358,15 @@ function renderCart() {
 
 // Helpers
 function renderCard(j) {
+  // Check if image exists, otherwise fallback to SVG
+  const imageDisplay = j.image 
+    ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-contain product-image">`
+    : renderJerseySVG(j.colors, 'medium');
+
   return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-    <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">${renderJerseySVG(j.colors,'medium')}</div>
+    <div class="h-48 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4 cursor-pointer" onclick="navigate('product',${j.id})">
+      ${imageDisplay}
+    </div>
     <div class="p-4">
       <span class="text-[10px] uppercase tracking-wider text-gold font-bold">${j.edition} Edition</span>
       <h3 class="font-semibold text-sm mt-1 text-gray-800 leading-tight cursor-pointer hover:text-royal transition" onclick="navigate('product',${j.id})">${j.title}</h3>
