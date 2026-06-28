@@ -195,12 +195,14 @@ const jerseys = [
 ];
 
 const leagueClubs = {
-  'La Liga': ['FC Barcelona','Real Madrid','Atletico Madrid','Celta Vigo','Getafe','Real Sociedad','Athletic Bilbao','Sevilla','Girona','Villarreal CF','Real Betis','Sevilla','Valencia'],
-  'Premier League': ['Manchester United','Manchester City','Arsenal','Liverpool','Chelsea','Tottenham'],
-  'Serie A': ['Inter Milan','AC Milan','Juventus','Napoli'],
+  'La Liga': ['FC Barcelona','Real Madrid','Atletico Madrid','Athletic Bilbao','Sevilla','Girona','Real Betis','Sevilla'],
+  'Premier League': ['Arsenal','Manchester United','Manchester City','Arsenal','Liverpool','Chelsea','Tottenham'],
+  'Serie A': ['Inter Milan','AC Milan','Juventus','Napoli', 'Roma'],
   'Bundesliga': ['Bayern Munich','Borussia Dortmund','Bayer Leverkusen'],
-  'Ligue 1': ['PSG','Lyon','Marseille'],
-  'UCL': ['FC Barcelona','Real Madrid','Manchester City','Bayern Munich','Inter Milan','PSG']
+  'Ligue 1': ['PSG','Lyon','Marseille', 'Monaco', 'LOSC'],
+  'UCL': ['Arsenal','FC Barcelona','Bayern Munich','Liverpool','Tottenham',
+    'Chelsea','Sporting CP','Juventus','Real Madrid','Manchester City','Inter Milan','PSG','Atlético Madrid',
+  'Bayer Leverkusen','Dortmund','Napoli','AC Milan']
 };
 
 let cart = [];
