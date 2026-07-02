@@ -185,6 +185,16 @@ const jerseys = [
     colors:['#ffffff','#d4af37'], 
     price:1150},
 
+     {id:1,
+   club:'FC Barcelona', 
+   title:'FC Barcelona Home Jersey 26/27', 
+   edition:'Player', 
+   league:'La Liga', 
+   retro:false, 
+   colors:['#a50044','#004d98'], 
+   price:1150,
+   image:'Images/Barcelona2627.png'},
+
 
   // Retro
   {id:101, club:'FC Barcelona', title:'Barcelona 2010-11 Iconic Kit', edition:'Retro', league:'La Liga', retro:true, colors:['#a50044','#004d98'], price:1350},
