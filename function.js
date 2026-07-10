@@ -223,6 +223,85 @@ const jerseys = [
    image:'SerieA/roma26.jpg'},
 
 
+  //  Seria A List Close
+
+
+  // Ligue 1 List
+   {id:22, 
+    club:'PSG', 
+    title:'PSG Home Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/psg26.jpg'},
+
+    {id:23, 
+    club:'Marseille', 
+    title:'Marseille Home Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/marseille26.jpg'},
+
+    {id:24, 
+    club:'Marseille', 
+    title:'Marseille Away Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/marseille27.jpg'},
+
+    {id:25, 
+    club:'Lyon', 
+    title:'Lyon Home Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/lyon26.jpg'},
+
+ {id:26, 
+    club:'Lyon', 
+    title:'Lyon Away Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/lyon27.jpg'},
+
+
+    {id:27, 
+    club:'LOSC', 
+    title:'LOSC Home Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/losc26.jpg'},
+
+
+    {id:28, 
+    club:'Monaco', 
+    title:'Monaco Home Jersey 26/27', 
+    edition:'Player', 
+    league:'Ligue 1', 
+    retro:false, 
+    colors:['#12a0d7','#ffffff'], 
+    price:1150,
+   image:'Ligue1/monaco26.jpg'},
+
+  //  Ligue 1 List Close
+
+
 
   // Retro
   {id:101, club:'FC Barcelona', title:'Barcelona 2010-11 Iconic Kit', edition:'Retro', league:'La Liga', retro:true, colors:['#a50044','#004d98'], price:1350},
