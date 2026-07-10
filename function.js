@@ -1,39 +1,72 @@
 
 // Data
 const jerseys = [
+
+  // Laliga List
   {id:1,
    club:'FC Barcelona', 
-   title:'FC Barcelona Home Jersey 25/26', 
+   title:'FC Barcelona Home Jersey 26/27', 
    edition:'Player', 
    league:'La Liga', 
    retro:false, 
    colors:['#a50044','#004d98'], 
    price:1150,
-   image:'Images/Barcelona2526.png'},
+   image:'Laliga/barcelona26.jpg'},
 
   {id:2, club:'FC Barcelona', 
-    title:'FC Barcelona Away Jersey 25/26', 
+    title:'FC Barcelona Away Jersey 26/27', 
     edition:'Fan', 
     league:'La Liga', 
     retro:false, 
     colors:['#004d98','#edbb00'], 
-    price:850},
+    price:850,
+  image:'Laliga/barcelona27.jpg'},
 
   {id:3, club:'Real Madrid', 
-    title:'Real Madrid Home Jersey 25/26', 
+    title:'Real Madrid Home Jersey 26/27', 
     edition:'Player', 
     league:'La Liga', 
     retro:false, 
     colors:['#ffffff','#d4af37'], 
-    price:1150},
+    price:1150,
+  image:'Laliga/Madrid2627.png'},
 
   {id:4, club:'Real Madrid', 
-    title:'Real Madrid Away Jersey 25/26', 
-    edition:'Fan', 
+    title:'Real Madrid Home Jersey 26/27', 
+    edition:'Player', 
+    league:'La Liga', 
+    retro:false, 
+    colors:['#ce3524','#ffffff'], 
+    price:1150,
+  image:'Laliga/madrid27.jpg'},
+
+  {id:5, club:'Atletico Madrid', 
+    title:'Atletico Madrid Home Jersey 26/27', 
+    edition:'Player', 
+    league:'La Liga', 
+    retro:false, 
+    colors:['#ce3524','#ffffff'], 
+    price:1150,
+  image:'Laliga/atletico26.jpg'},
+
+  {id:6, club:'Athletico Bilbao', 
+    title:'Athletico Bilbao Home Jersey 26/27', 
+    edition:'Player', 
     league:'La Liga', 
     retro:false, 
     colors:['#1a1a2e','#d4af37'], 
-    price:850},
+    price:1150,
+  image:'Laliga/athletic26.jpg'},
+
+   {id:7, club:'Sevilla', 
+    title:'Sevilla Home Jersey 26/27', 
+    edition:'Player', 
+    league:'La Liga', 
+    retro:false, 
+    colors:['#1a1a2e','#d4af37'], 
+    price:1150,
+  image:'Laliga/sevilla26.jpg'},
+
 
   {id:5, club:'Manchester United', 
     title:'Manchester United Home Jersey 25/26', 
@@ -157,15 +190,6 @@ const jerseys = [
     colors:['#12a0d7','#ffffff'], 
     price:850},
 
-  {id:19, 
-    club:'Atletico Madrid', 
-    title:'Atletico Madrid Home Jersey 25/26', 
-    edition:'Fan', 
-    league:'La Liga', 
-    retro:false, 
-    colors:['#ce3524','#ffffff'], 
-    price:850},
-
   {id:20, 
     club:'Tottenham', 
     title:'Tottenham Home Jersey 25/26', 
@@ -175,25 +199,7 @@ const jerseys = [
     colors:['#ffffff','#132257'], 
     price:850},
 
-  {id:21, 
-    club:'Real Madrid', 
-    title:'Real Madrid Home Jersey 25/26', 
-    edition:'Player', 
-    league:'La Liga', 
-    retro:false, 
-    image:'Images/Madrid2627.png', 
-    colors:['#ffffff','#d4af37'], 
-    price:1150},
 
-     {id:1,
-   club:'FC Barcelona', 
-   title:'FC Barcelona Home Jersey 26/27', 
-   edition:'Player', 
-   league:'La Liga', 
-   retro:false, 
-   colors:['#a50044','#004d98'], 
-   price:1150,
-   image:'Images/Barcelona2627.png'},
 
 
   // Retro
@@ -205,7 +211,7 @@ const jerseys = [
 ];
 
 const leagueClubs = {
-  'La Liga': ['FC Barcelona','Real Madrid','Atletico Madrid','Athletic Bilbao','Sevilla','Girona','Real Betis','Sevilla'],
+  'La Liga': ['FC Barcelona','Real Madrid','Atletico Madrid','Athletic Bilbao','Sevilla'],
   'Premier League': ['Arsenal','Manchester United','Manchester City','Arsenal','Liverpool','Chelsea','Tottenham'],
   'Serie A': ['Inter Milan','AC Milan','Juventus','Napoli', 'Roma'],
   'Bundesliga': ['Bayern Munich','Borussia Dortmund','Bayer Leverkusen'],

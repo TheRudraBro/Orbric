@@ -40,100 +40,215 @@
       class="text-2xl font-outfit font-900 tracking-widest text-royal hover:opacity-80 transition">
       ORBRIC</a>
      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
-      <a href="#" onclick="navigate('home')" class="nav-link">Home</a> <a href="#" onclick="navigate('player')" class="nav-link">Player Edition</a> <a href="#" onclick="navigate('fan')" class="nav-link">Fan Edition</a> <a href="#" onclick="navigate('retro')" class="nav-link">Retro Collection</a>
+      <a href="#" onclick="navigate('home')" class="nav-link">Home</a> 
+      <a href="#" onclick="navigate('player')" class="nav-link">Player Edition</a> 
+      <a href="#" onclick="navigate('fan')" class="nav-link">Fan Edition</a> 
+      <a href="#" onclick="navigate('retro')" class="nav-link">Retro Collection</a>
+
       <div class="relative" id="leagueDropdown">
-       <button onclick="toggleLeagues()" class="nav-link flex items-center gap-2">Leagues <i data-lucide="chevron-down" style="width:16px;height:16px"></i></button>
-       <div id="leagueMenu" class="hidden absolute top-12 left-0 glass rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 backdrop-blur-xl border border-white/50">
-        <a href="#" onclick="selectLeague('La Liga')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">La Liga</a> <a href="#" onclick="selectLeague('Premier League')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Premier League</a> <a href="#" onclick="selectLeague('Serie A')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Serie A</a> <a href="#" onclick="selectLeague('Bundesliga')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Bundesliga</a> <a href="#" onclick="selectLeague('Ligue 1')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Ligue 1</a> <a href="#" onclick="selectLeague('UCL')" class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">UEFA Champions League</a>
+       <button onclick="toggleLeagues()" class="nav-link flex items-center gap-2">
+        Leagues 
+        <i data-lucide="chevron-down" style="width:16px;height:16px"></i>
+      </button>
+       <div id="leagueMenu" class="hidden absolute top-12 left-0 glass rounded-2xl shadow-2xl 
+       p-4 min-w-[220px] z-50 backdrop-blur-xl border border-white/50">
+
+        <a href="#" onclick="selectLeague('La Liga')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">La Liga</a> 
+
+        <a href="#" onclick="selectLeague('Premier League')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Premier League</a> 
+
+        <a href="#" onclick="selectLeague('Serie A')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Serie A</a> 
+
+        <a href="#" onclick="selectLeague('Bundesliga')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Bundesliga</a> 
+
+        <a href="#" onclick="selectLeague('Ligue 1')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">Ligue 1</a> 
+
+        <a href="#" onclick="selectLeague('UCL')" 
+        class="block px-4 py-2.5 rounded-lg hover:bg-royal/8 text-sm font-medium transition">UEFA Champions League
+      </a>
+
        </div>
       </div>
      </div>
+
+
      <div class="flex items-center gap-4">
-      <button onclick="toggleSearch()" class="p-2.5 rounded-full hover:bg-royal/8 transition duration-300"><i data-lucide="search" style="width:20px;height:20px" class="text-gray-700"></i></button> <button onclick="navigate('cart')" class="p-2.5 rounded-full hover:bg-royal/8 transition duration-300 relative"><i data-lucide="shopping-bag" style="width:20px;height:20px" class="text-gray-700"></i><span id="cartCount" class="nav-badge absolute -top-1 -right-1 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] hidden">0</span></button> <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-full hover:bg-royal/8"><i data-lucide="menu" style="width:22px;height:22px" class="text-gray-700"></i></button>
+
+      <button onclick="toggleSearch()" class="p-2.5 rounded-full hover:bg-royal/8 transition duration-300">
+        <i data-lucide="search" style="width:20px;height:20px" class="text-gray-700"></i>
+      </button> 
+
+      <button onclick="navigate('cart')" class="p-2.5 rounded-full hover:bg-royal/8 transition duration-300 relative">
+
+        <i data-lucide="shopping-bag" style="width:20px;height:20px" class="text-gray-700"></i>
+        <span id="cartCount" class="nav-badge absolute -top-1 -right-1 text-white text-xs w-5 h-5 rounded-full 
+        flex items-center justify-center font-bold text-[10px] hidden">0
+      </span>
+      </button> 
+
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-full hover:bg-royal/8">
+          <i data-lucide="menu" style="width:22px;height:22px" class="text-gray-700"></i>
+        </button>
      </div>
     </div>
-    <div class="premium-divider mx-4"></div><div id="searchBar" class="hidden px-4 py-4">
-     <input type="text" id="searchInput" placeholder="Search clubs, jerseys..." class="w-full px-5 py-3 rounded-xl border border-gray-200/60 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm placeholder-gray-400 transition" oninput="handleSearch(this.value)">
-    </div><div id="mobileMenu" class="hidden md:hidden px-4 pb-4 border-t border-gray-100 pt-4 space-y-2">
-     <a href="#" onclick="navigate('home');toggleMobileMenu()" class="block py-2.5 text-sm font-medium hover:text-royal transition">Home</a> <a href="#" onclick="navigate('player');toggleMobileMenu()" class="block py-2.5 text-sm font-medium hover:text-royal transition">Player Edition</a> <a href="#" onclick="navigate('fan');toggleMobileMenu()" class="block py-2.5 text-sm font-medium hover:text-royal transition">Fan Edition</a> <a href="#" onclick="navigate('retro');toggleMobileMenu()" class="block py-2.5 text-sm font-medium hover:text-royal transition">Retro Collection</a>
+
+    <div class="premium-divider mx-4"></div>
+    <div id="searchBar" class="hidden px-4 py-4">
+     <input type="text" id="searchInput" placeholder="Search clubs, jerseys..." 
+     class="w-full px-5 py-3 rounded-xl border border-gray-200/60 focus:border-royal 
+     focus:ring-2 focus:ring-royal/10 outline-none text-sm placeholder-gray-400 transition" 
+     oninput="handleSearch(this.value)">
+    </div>
+
+    <div id="mobileMenu" 
+    class="hidden md:hidden px-4 pb-4 border-t border-gray-100 pt-4 space-y-2">
+     <a href="#" onclick="navigate('home');toggleMobileMenu()" 
+     class="block py-2.5 text-sm font-medium hover:text-royal transition">Home</a> 
+
+     <a href="#" onclick="navigate('player');toggleMobileMenu()" 
+     class="block py-2.5 text-sm font-medium hover:text-royal transition">Player Edition</a> 
+
+     <a href="#" onclick="navigate('fan');toggleMobileMenu()" 
+     class="block py-2.5 text-sm font-medium hover:text-royal transition">Fan Edition</a> 
+
+     <a href="#" onclick="navigate('retro');toggleMobileMenu()" 
+     class="block py-2.5 text-sm font-medium hover:text-royal transition">Retro Collection</a>
+
      <div class="py-2.5 text-sm font-medium text-gold">
       Leagues:
      </div>
+
      <div class="pl-3 space-y-1.5 text-sm text-gray-600">
-      <a href="#" onclick="selectLeague('La Liga');toggleMobileMenu()" class="block py-1.5 hover:text-royal transition">La Liga</a> <a href="#" onclick="selectLeague('Premier League');toggleMobileMenu()" class="block py-1.5 hover:text-royal transition">Premier League</a> <a href="#" onclick="selectLeague('Serie A');toggleMobileMenu()" class="block py-1.5 hover:text-royal transition">Serie A</a> <a href="#" onclick="selectLeague('Bundesliga');toggleMobileMenu()" class="block py-1.5 hover:text-royal transition">Bundesliga</a>
+      <a href="#" onclick="selectLeague('La Liga');toggleMobileMenu()" 
+      class="block py-1.5 hover:text-royal transition">La Liga</a> 
+
+      <a href="#" onclick="selectLeague('Premier League');toggleMobileMenu()" 
+      class="block py-1.5 hover:text-royal transition">Premier League</a> 
+
+      <a href="#" onclick="selectLeague('Serie A');toggleMobileMenu()" 
+      class="block py-1.5 hover:text-royal transition">Serie A</a> 
+
+      <a href="#" onclick="selectLeague('Bundesliga');toggleMobileMenu()" 
+      class="block py-1.5 hover:text-royal transition">Bundesliga</a>
      </div>
     </div>
-   </nav><main id="mainContent" class="w-full"></main><div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] hidden"></div><footer class="bg-gradient-to-b from-royal to-[#0d2347] text-white mt-20 border-t border-white/10">
+   </nav>
+
+
+   <!-- Main Content -->
+   <main id="mainContent" class="w-full">
+   </main>
+
+   <div id="toast" 
+   class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] hidden">
+   </div>
+   
+   <footer class="bg-gradient-to-b from-royal to-[#0d2347] text-white mt-20 border-t border-white/10">
+
     <div class="max-w-7xl mx-auto px-4 py-16">
      <div class="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
       <div class="md:col-span-2">
-       <h3 class="text-3xl font-900 tracking-wider mb-4 flex items-center gap-2"><span class="text-gold">◆</span>ORBRIC</h3>
-       <p class="text-white/70 leading-relaxed text-sm mb-6">Premium authentic football jerseys for the passionate fan. Wear your club with pride and authentic style.</p>
+
+       <h3 class="text-3xl font-900 tracking-wider mb-4 flex items-center gap-2">
+        <span class="text-gold">◆</span>ORBRIC</h3>
+
+       <p class="text-white/70 leading-relaxed text-sm mb-6">
+        Premium authentic football jerseys for the passionate fan. 
+        Wear your club with pride and authentic style.</p>
+
        <div class="flex gap-3">
-        <!-- <button class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold 
-        transition flex items-center justify-center">
-        <i data-lucide="instagram" style="width:18px;height:18px"></i>
-      </button>  -->
-        <a href="https://www.facebook.com/orbric"
+
+        <a href="https://www.instagram.com/orbric_clothes/"
    target="_blank"
    rel="noopener noreferrer"
    class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold transition flex items-center justify-center">
     <i data-lucide="instagram" style="width:18px;height:18px"></i>
 </a>
-      <!-- <button class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold
-       transition flex items-center justify-center">
-       <i data-lucide="twitter" style="width:18px;height:18px"></i>
-      </button>  -->
-        <a href="https://www.facebook.com/orbric"
+    
+        <a href="https://www.twitter.com/orbric_clothes/"
    target="_blank"
    rel="noopener noreferrer"
    class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold transition flex items-center justify-center">
     <i data-lucide="twitter" style="width:18px;height:18px"></i>
 </a>
-      <!-- <button class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold 
-      transition flex items-center justify-center">
-      <i data-lucide="facebook" style="width:18px;height:18px"></i>
-    </button>  -->
+    
     <a href="https://www.facebook.com/orbric"
    target="_blank"
    rel="noopener noreferrer"
    class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold transition flex items-center justify-center">
     <i data-lucide="facebook" style="width:18px;height:18px"></i>
 </a>
+
+
     <a href="https://www.linkedin.com/company/orbric"
    target="_blank"
    rel="noopener noreferrer"
    class="w-10 h-10 rounded-full bg-white/10 hover:bg-gold/20 hover:text-gold transition flex items-center justify-center">
      <i data-lucide="linkedin" style="width:18px;height:18px"></i>
     </a>
+
        </div>
       </div>
+
       <div>
        <h4 class="font-bold text-gold text-sm uppercase tracking-wider mb-4">Collections</h4>
+
        <div class="space-y-2.5">
-        <a href="#" onclick="navigate('player')" class="block text-white/70 hover:text-gold transition text-sm">Player Edition</a> <a href="#" onclick="navigate('fan')" class="block text-white/70 hover:text-gold transition text-sm">Fan Edition</a> <a href="#" onclick="navigate('retro')" class="block text-white/70 hover:text-gold transition text-sm">Retro Collection</a>
+        <a href="#" onclick="navigate('player')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Player Edition</a> 
+
+        <a href="#" onclick="navigate('fan')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Fan Edition</a> 
+
+        <a href="#" onclick="navigate('retro')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Retro Collection</a>
        </div>
       </div>
+
       <div>
        <h4 class="font-bold text-gold text-sm uppercase tracking-wider mb-4">Top Leagues</h4>
        <div class="space-y-2.5">
-        <a href="#" onclick="selectLeague('La Liga')" class="block text-white/70 hover:text-gold transition text-sm">La Liga</a> <a href="#" onclick="selectLeague('Premier League')" class="block text-white/70 hover:text-gold transition text-sm">Premier League</a> <a href="#" onclick="selectLeague('Serie A')" class="block text-white/70 hover:text-gold transition text-sm">Serie A</a> <a href="#" onclick="selectLeague('Bundesliga')" class="block text-white/70 hover:text-gold transition text-sm">Bundesliga</a>
+        <a href="#" onclick="selectLeague('La Liga')" 
+        class="block text-white/70 hover:text-gold transition text-sm">La Liga</a> 
+
+        <a href="#" onclick="selectLeague('Premier League')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Premier League</a> 
+
+        <a href="#" onclick="selectLeague('Serie A')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Serie A</a> 
+
+        <a href="#" onclick="selectLeague('Bundesliga')" 
+        class="block text-white/70 hover:text-gold transition text-sm">Bundesliga</a>
        </div>
       </div>
+
       <div>
        <h4 class="font-bold text-gold text-sm uppercase tracking-wider mb-4">Support</h4>
        <div class="space-y-2.5">
-        <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Contact Us</a> <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Shipping Info</a> <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Returns</a> <a href="#" class="block text-white/70 hover:text-gold transition text-sm">FAQ</a>
+        <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Contact Us</a> 
+        <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Shipping Info</a> 
+        <a href="#" class="block text-white/70 hover:text-gold transition text-sm">Returns</a>
+       <a href="#" class="block text-white/70 hover:text-gold transition text-sm">FAQ</a>
        </div>
       </div>
      </div>
+
      <div class="premium-divider my-8"></div>
+
      <div class="flex flex-col md:flex-row items-center justify-between text-xs text-white/50">
       <p>© 2026 ORBRIC. All rights reserved. | Premium Football Apparel</p>
       <div class="flex gap-6 mt-4 md:mt-0">
-       <a href="#" class="hover:text-gold transition">Privacy Policy</a> <a href="#" class="hover:text-gold transition">Terms &amp; Conditions</a> <a href="#" class="hover:text-gold transition">Cookies</a>
+       <a href="#" class="hover:text-gold transition">Privacy Policy</a> 
+       <a href="#" class="hover:text-gold transition">Terms &amp; Conditions</a> 
+       <a href="#" class="hover:text-gold transition">Cookies</a>
       </div>
      </div>
+     
     </div>
    </footer>
   </div>
