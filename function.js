@@ -952,3 +952,58 @@ navigate('home');
 lucide.createIcons();
 
 // Theme
+/*==========================
+PREMIUM THEME
+==========================*/
+
+function applyTheme(theme){
+
+    if(theme==="dark"){
+
+        document.body.classList.add("dark");
+
+        document.getElementById("themeToggle").innerHTML="☀️";
+
+    }
+
+    else{
+
+        document.body.classList.remove("dark");
+
+        document.getElementById("themeToggle").innerHTML="🌙";
+
+    }
+
+    localStorage.setItem("theme",theme);
+
+}
+
+
+
+function toggleTheme(){
+
+    if(document.body.classList.contains("dark")){
+
+        applyTheme("light");
+
+    }
+
+    else{
+
+        applyTheme("dark");
+
+    }
+
+}
+
+
+
+window.addEventListener("DOMContentLoaded",()=>{
+
+    const savedTheme=
+
+    localStorage.getItem("theme") || "light";
+
+    applyTheme(savedTheme);
+
+});
