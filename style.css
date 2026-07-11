@@ -1,417 +1,151 @@
+    html, body { height: 100%; margin: 0; font-family: 'Outfit', sans-serif; }
+    .glass { background: rgba(255,255,255,0.65); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 8px 32px rgba(26,58,107,0.08); }
+    .card-hover { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(26,58,107,0.15); border-color: rgba(201,168,76,0.3); }
+    .fade-in { animation: fadeIn 0.5s ease 0.1s backwards; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .hero-gradient { background: linear-gradient(135deg, #f9fbfd 0%, #f0f5fb 50%, #e8f0fa 100%); }
+    .btn-primary { background: linear-gradient(135deg, #1a3a6b 0%, #264d8a 100%); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 4px 15px rgba(26,58,107,0.2); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(26,58,107,0.35); }
+    .btn-primary:active { transform: translateY(-1px); }
+    .size-btn { transition: all 0.2s; border-color: rgba(26,58,107,0.1); }
+    .size-btn.active { background: linear-gradient(135deg, #1a3a6b, #264d8a); color: white; transform: scale(1.08); box-shadow: 0 4px 12px rgba(26,58,107,0.25); }
+    .nav-link { position: relative; font-weight: 500; transition: color 0.3s; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2.5px; background: linear-gradient(90deg, #c9a84c, #d4b85d); transition:width 0.4s ease; border-radius: 2px; }
+    .nav-link:hover { color: #1a3a6b; }
+    .nav-link:hover::after { width:100%; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #c9a84c, #1a3a6b); border-radius: 4px; }
+    .toast { animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.5s forwards; }
+    @keyframes slideUp { from { transform:translateY(20px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+    @keyframes fadeOut { to { opacity:0; transform:translateY(-10px); } }
+    .premium-divider { background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); height: 1px; }
+    .luxury-text { background: linear-gradient(135deg, #1a3a6b 0%, #264d8a 50%, #c9a84c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-badge { background: linear-gradient(135deg, #c9a84c, #d4b85d); box-shadow: 0 2px 8px rgba(201,168,76,0.3); }
+    body { box-sizing: border-box; }
+    .product-image{
+transition:.5s;
+}
 
-/* ORBRIC Premium Theme */
+.product-image:hover{
+transform:scale(1.05);
+}
+
+/* Theme Toggle Styles */
+/* =========================
+      LIGHT / DARK MODE
+========================= */
+
 :root{
---bg:#0b0f19;
---surface:#141a26;
---surface2:#1b2333;
---gold:#d4af37;
---gold2:#f5d67a;
---text:#fff;
---muted:#b7bdc7;
---border:rgba(212,175,55,.15);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{
-background:linear-gradient(180deg,#0b0f19,#101726);
-color:var(--text);
-font-family:'Outfit',sans-serif;
-scroll-behavior:smooth;
-}
-body{min-height:100vh}
-.glass{
-background:rgba(20,26,38,.75);
-backdrop-filter:blur(18px);
-border:1px solid var(--border);
-box-shadow:0 15px 40px rgba(0,0,0,.35);
-}
-.hero-gradient{
-background:
-radial-gradient(circle at top,#243b65 0,#101726 40%,#0b0f19 100%);
-}
-.card-hover{
-background:var(--surface);
-border:1px solid var(--border);
-border-radius:20px;
-transition:.35s;
-overflow:hidden;
-}
-.card-hover:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 25px 60px rgba(0,0,0,.45);
-border-color:var(--gold);
-}
-.bg-white{background:var(--surface)!important;color:var(--text)!important}
-.bg-gray-50{background:var(--surface2)!important}
-.bg-surface{background:var(--bg)!important}
-.text-gray-800,.text-gray-700,.text-gray-600,.text-gray-500{color:var(--muted)!important}
-.text-royal{color:var(--gold)!important}
-.text-gold{color:var(--gold2)!important}
-.btn-primary{
-background:linear-gradient(135deg,var(--gold),var(--gold2));
-color:#111;
-font-weight:700;
-border:none;
-border-radius:999px;
-transition:.3s;
-}
-.btn-primary:hover{
-transform:translateY(-3px);
-box-shadow:0 12px 35px rgba(212,175,55,.35);
-}
-.size-btn{
-background:#1d2534;
-border:1px solid #303b52;
-color:#fff;
-transition:.25s;
-}
-.size-btn:hover,.size-btn.active{
-background:linear-gradient(135deg,var(--gold),var(--gold2));
-color:#111;
-border-color:var(--gold);
-}
-input,select,textarea{
-background:#1b2333!important;
-border:1px solid #2d3950!important;
-color:#fff!important;
-}
-input::placeholder{color:#9099aa}
-nav{
-background:rgba(11,15,25,.85)!important;
-backdrop-filter:blur(16px);
-}
-.nav-link{color:#fff;text-decoration:none;transition:.3s}
-.nav-link:hover{color:var(--gold)}
-.nav-link::after{
-content:"";
-display:block;
-height:2px;
-width:0;
-background:var(--gold);
-transition:.3s;
-}
-.nav-link:hover::after{width:100%}
-.product-image{transition:.45s}
-.product-image:hover{transform:scale(1.08)}
-footer{
-background:linear-gradient(180deg,#111827,#090d14)!important;
-}
-.toast{
-background:linear-gradient(135deg,var(--gold),var(--gold2));
-color:#111;
-padding:12px 20px;
-border-radius:999px;
-font-weight:700;
-}
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-thumb{
-background:linear-gradient(var(--gold),#8f6a12);
-border-radius:999px;
-}
-.fade-in{animation:fade .5s ease}
-@keyframes fade{
-from{opacity:0;transform:translateY(15px)}
-to{opacity:1;transform:none}
-}
-img{display:block}
 
-/* Additional customization area */
-/* custom section 1 */
-/* custom section 2 */
-/* custom section 3 */
-/* custom section 4 */
-/* custom section 5 */
-/* custom section 6 */
-/* custom section 7 */
-/* custom section 8 */
-/* custom section 9 */
-/* custom section 10 */
-/* custom section 11 */
-/* custom section 12 */
-/* custom section 13 */
-/* custom section 14 */
-/* custom section 15 */
-/* custom section 16 */
-/* custom section 17 */
-/* custom section 18 */
-/* custom section 19 */
-/* custom section 20 */
-/* custom section 21 */
-/* custom section 22 */
-/* custom section 23 */
-/* custom section 24 */
-/* custom section 25 */
-/* custom section 26 */
-/* custom section 27 */
-/* custom section 28 */
-/* custom section 29 */
-/* custom section 30 */
-/* custom section 31 */
-/* custom section 32 */
-/* custom section 33 */
-/* custom section 34 */
-/* custom section 35 */
-/* custom section 36 */
-/* custom section 37 */
-/* custom section 38 */
-/* custom section 39 */
-/* custom section 40 */
-/* custom section 41 */
-/* custom section 42 */
-/* custom section 43 */
-/* custom section 44 */
-/* custom section 45 */
-/* custom section 46 */
-/* custom section 47 */
-/* custom section 48 */
-/* custom section 49 */
-/* custom section 50 */
-/* custom section 51 */
-/* custom section 52 */
-/* custom section 53 */
-/* custom section 54 */
-/* custom section 55 */
-/* custom section 56 */
-/* custom section 57 */
-/* custom section 58 */
-/* custom section 59 */
-/* custom section 60 */
-/* custom section 61 */
-/* custom section 62 */
-/* custom section 63 */
-/* custom section 64 */
-/* custom section 65 */
-/* custom section 66 */
-/* custom section 67 */
-/* custom section 68 */
-/* custom section 69 */
-/* custom section 70 */
-/* custom section 71 */
-/* custom section 72 */
-/* custom section 73 */
-/* custom section 74 */
-/* custom section 75 */
-/* custom section 76 */
-/* custom section 77 */
-/* custom section 78 */
-/* custom section 79 */
-/* custom section 80 */
-/* custom section 81 */
-/* custom section 82 */
-/* custom section 83 */
-/* custom section 84 */
-/* custom section 85 */
-/* custom section 86 */
-/* custom section 87 */
-/* custom section 88 */
-/* custom section 89 */
-/* custom section 90 */
-/* custom section 91 */
-/* custom section 92 */
-/* custom section 93 */
-/* custom section 94 */
-/* custom section 95 */
-/* custom section 96 */
-/* custom section 97 */
-/* custom section 98 */
-/* custom section 99 */
-/* custom section 100 */
-/* custom section 101 */
-/* custom section 102 */
-/* custom section 103 */
-/* custom section 104 */
-/* custom section 105 */
-/* custom section 106 */
-/* custom section 107 */
-/* custom section 108 */
-/* custom section 109 */
-/* custom section 110 */
-/* custom section 111 */
-/* custom section 112 */
-/* custom section 113 */
-/* custom section 114 */
-/* custom section 115 */
-/* custom section 116 */
-/* custom section 117 */
-/* custom section 118 */
-/* custom section 119 */
-/* custom section 120 */
-/* custom section 121 */
-/* custom section 122 */
-/* custom section 123 */
-/* custom section 124 */
-/* custom section 125 */
-/* custom section 126 */
-/* custom section 127 */
-/* custom section 128 */
-/* custom section 129 */
-/* custom section 130 */
-/* custom section 131 */
-/* custom section 132 */
-/* custom section 133 */
-/* custom section 134 */
-/* custom section 135 */
-/* custom section 136 */
-/* custom section 137 */
-/* custom section 138 */
-/* custom section 139 */
-/* custom section 140 */
-/* custom section 141 */
-/* custom section 142 */
-/* custom section 143 */
-/* custom section 144 */
-/* custom section 145 */
-/* custom section 146 */
-/* custom section 147 */
-/* custom section 148 */
-/* custom section 149 */
-/* custom section 150 */
-/* custom section 151 */
-/* custom section 152 */
-/* custom section 153 */
-/* custom section 154 */
-/* custom section 155 */
-/* custom section 156 */
-/* custom section 157 */
-/* custom section 158 */
-/* custom section 159 */
-/* custom section 160 */
-/* custom section 161 */
-/* custom section 162 */
-/* custom section 163 */
-/* custom section 164 */
-/* custom section 165 */
-/* custom section 166 */
-/* custom section 167 */
-/* custom section 168 */
-/* custom section 169 */
-/* custom section 170 */
-/* custom section 171 */
-/* custom section 172 */
-/* custom section 173 */
-/* custom section 174 */
-/* custom section 175 */
-/* custom section 176 */
-/* custom section 177 */
-/* custom section 178 */
-/* custom section 179 */
-/* custom section 180 */
-/* custom section 181 */
-/* custom section 182 */
-/* custom section 183 */
-/* custom section 184 */
-/* custom section 185 */
-/* custom section 186 */
-/* custom section 187 */
-/* custom section 188 */
-/* custom section 189 */
-/* custom section 190 */
-/* custom section 191 */
-/* custom section 192 */
-/* custom section 193 */
-/* custom section 194 */
-/* custom section 195 */
-/* custom section 196 */
-/* custom section 197 */
-/* custom section 198 */
-/* custom section 199 */
-/* custom section 200 */
-/* custom section 201 */
-/* custom section 202 */
-/* custom section 203 */
-/* custom section 204 */
-/* custom section 205 */
-/* custom section 206 */
-/* custom section 207 */
-/* custom section 208 */
-/* custom section 209 */
-/* custom section 210 */
-/* custom section 211 */
-/* custom section 212 */
-/* custom section 213 */
-/* custom section 214 */
-/* custom section 215 */
-/* custom section 216 */
-/* custom section 217 */
-/* custom section 218 */
-/* custom section 219 */
-/* custom section 220 */
-/* custom section 221 */
-/* custom section 222 */
-/* custom section 223 */
-/* custom section 224 */
-/* custom section 225 */
-/* custom section 226 */
-/* custom section 227 */
-/* custom section 228 */
-/* custom section 229 */
-/* custom section 230 */
-/* custom section 231 */
-/* custom section 232 */
-/* custom section 233 */
-/* custom section 234 */
-/* custom section 235 */
-/* custom section 236 */
-/* custom section 237 */
-/* custom section 238 */
-/* custom section 239 */
-/* custom section 240 */
-/* custom section 241 */
-/* custom section 242 */
-/* custom section 243 */
-/* custom section 244 */
-/* custom section 245 */
-/* custom section 246 */
-/* custom section 247 */
-/* custom section 248 */
-/* custom section 249 */
-/* custom section 250 */
-/* custom section 251 */
-/* custom section 252 */
-/* custom section 253 */
-/* custom section 254 */
-/* custom section 255 */
-/* custom section 256 */
-/* custom section 257 */
-/* custom section 258 */
-/* custom section 259 */
-/* custom section 260 */
-/* custom section 261 */
-/* custom section 262 */
-/* custom section 263 */
-/* custom section 264 */
-/* custom section 265 */
-/* custom section 266 */
-/* custom section 267 */
-/* custom section 268 */
-/* custom section 269 */
-/* custom section 270 */
-/* custom section 271 */
-/* custom section 272 */
-/* custom section 273 */
-/* custom section 274 */
-/* custom section 275 */
-/* custom section 276 */
-/* custom section 277 */
-/* custom section 278 */
-/* custom section 279 */
-/* custom section 280 */
-/* custom section 281 */
-/* custom section 282 */
-/* custom section 283 */
-/* custom section 284 */
-/* custom section 285 */
-/* custom section 286 */
-/* custom section 287 */
-/* custom section 288 */
-/* custom section 289 */
-/* custom section 290 */
-/* custom section 291 */
-/* custom section 292 */
-/* custom section 293 */
-/* custom section 294 */
-/* custom section 295 */
-/* custom section 296 */
-/* custom section 297 */
-/* custom section 298 */
-/* custom section 299 */
-/* custom section 300 */
+--bg:#f4f6f9;
+--surface:#ffffff;
+--text:#1f2937;
+--card:#ffffff;
+--border:#e5e7eb;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+
+transition:.35s;
+
+}
+
+.dark{
+
+--bg:#0f172a;
+--surface:#111827;
+--text:#f8fafc;
+--card:#1e293b;
+--border:#334155;
+
+}
+
+/* Common */
+
+.dark .bg-white{
+
+background:var(--card)!important;
+
+color:var(--text)!important;
+
+}
+
+.dark .glass{
+
+background:rgba(17,24,39,.85);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.dark nav{
+
+background:#111827;
+
+}
+
+.dark .hero-gradient{
+
+background:
+linear-gradient(
+135deg,
+#111827,
+#1e293b,
+#0f172a);
+
+}
+
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800{
+
+color:#cbd5e1!important;
+
+}
+
+.dark input{
+
+background:#1e293b;
+
+color:white;
+
+border-color:#334155;
+
+}
+
+.dark footer{
+
+background:#020617;
+
+}
+
+.dark .card-hover{
+
+background:#1e293b;
+
+border-color:#334155;
+
+}
+
+.dark .size-btn{
+
+background:#334155;
+
+color:white;
+
+}
+
+.dark .size-btn.active{
+
+background:#1a3a6b;
+
+color:white;
+
+}
