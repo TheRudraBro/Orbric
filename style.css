@@ -31,3 +31,16 @@ transition:.5s;
 .product-image:hover{
 transform:scale(1.05);
 }
+.logo-container{
+    height:48px;
+    display:flex;
+    align-items:center;
+    overflow:visible;
+}
+
+.logo-img{
+    height:38px;
+    width:auto;
+    transform:scale(1.4);
+    transform-origin:left center;
+}
