@@ -454,25 +454,23 @@ class="w-full h-full object-contain p-4"
             const discount = j.edition === 'Player' ? 25 : 15;
             const discountedPrice = Math.round(j.price * (1 - discount / 100));
             return `
-            <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+            <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
               <div class="relative">
-          <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden" onclick="navigate('product',${j.id})">
-  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
-</div>
+                <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden" onclick="navigate('product',${j.id})">
+                  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
+                </div>
                 <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">-${discount}%</div>
               </div>
-              <div class="p-4">
+              <div class="p-4 flex flex-col flex-1">
                 <span class="text-[10px] uppercase tracking-wider text-gold font-bold">${j.edition}</span>
                 <h3 class="font-semibold text-sm mt-1 text-gray-800 leading-tight cursor-pointer hover:text-royal transition" onclick="navigate('product',${j.id})">${j.title}</h3>
-                <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center gap-2 mt-2 flex-1">
                   <p class="text-royal font-bold">৳${discountedPrice.toLocaleString()}</p>
                   <p class="text-gray-400 text-xs line-through">৳${j.price.toLocaleString()}</p>
                 </div>
-                <div class="flex gap-1 mt-3" id="discount-sizes-${j.id}">
-                  ${['S','M','L','XL','XXL'].map(s=>`<button onclick="event.stopPropagation();selectDiscountSize(${j.id},'${s}',this)" class="size-btn text-[10px] w-8 h-6 rounded border border-gray-200 hover:border-royal">${s}</button>`).join('')}
+                <div class="mt-4 pt-3 border-t border-gray-50">
+                  <button onclick="event.stopPropagation();openSizeModal(${j.id})" class="btn-primary text-white text-xs py-2.5 rounded-xl w-full font-bold">Add To Cart</button>
                 </div>
-                <p id="discount-err-${j.id}" class="text-red-500 text-[10px] mt-1 hidden">Select size first.</p>
-                <button onclick="event.stopPropagation();addDiscountToCart(${j.id})" class="btn-primary text-white text-xs px-3 py-2 rounded-lg w-full font-medium mt-3">Add To Cart</button>
               </div>
             </div>
             `;
@@ -630,27 +628,21 @@ function renderCart() {
 
 // Helpers
 function renderCard(j) {
-  // Use object-cover to make the image fill the top completely
   const imageDisplay = j.image 
     ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">`
     : renderJerseySVG(j.colors, 'medium');
 
-  return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-    <!-- Removed padding (p-4), increased height to h-64, added w-full -->
+  return `<div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col h-full">
     <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden relative" onclick="navigate('product',${j.id})">
       ${imageDisplay}
     </div>
-    <div class="p-5">
+    <div class="p-5 flex flex-col flex-1">
       <span class="text-[10px] uppercase tracking-wider text-gold font-bold">${j.edition} Edition</span>
       <h3 class="font-semibold text-sm mt-1 text-gray-800 leading-tight cursor-pointer hover:text-royal transition" onclick="navigate('product',${j.id})">${j.title}</h3>
-      <p class="text-royal font-bold mt-2">৳${j.price.toLocaleString()}</p>
-      <div class="flex gap-1 mt-3" id="card-sizes-${j.id}">
-        ${['S','M','L','XL','XXL'].map(s=>`<button onclick="event.stopPropagation();selectCardSize(${j.id},'${s}',this)" class="size-btn text-[10px] w-8 h-6 rounded border border-gray-200 hover:border-royal">${s}</button>`).join('')}
-      </div>
-      <p id="card-err-${j.id}" class="text-red-500 text-[10px] mt-1 hidden">Please select your jersey size first.</p>
-      <div class="flex gap-2 mt-4">
-        <button onclick="event.stopPropagation();addToCartFromCard(${j.id})" class="btn-primary text-white text-xs px-3 py-2 rounded-lg flex-1 font-medium">Add To Cart</button>
-        <button onclick="event.stopPropagation();buyNowCard(${j.id})" class="bg-gold text-white text-xs px-3 py-2 rounded-lg font-medium">Buy Now</button>
+      <p class="text-royal font-bold mt-2 flex-1">৳${j.price.toLocaleString()}</p>
+      
+      <div class="mt-4 pt-4 border-t border-gray-50">
+        <button onclick="event.stopPropagation();openSizeModal(${j.id})" class="btn-primary text-white text-xs py-2.5 rounded-xl w-full font-bold">Add To Cart</button>
       </div>
     </div>
   </div>`;
@@ -951,59 +943,121 @@ document.addEventListener('click', e => {
 navigate('home');
 lucide.createIcons();
 
-// Theme
-/*==========================
-PREMIUM THEME
-==========================*/
+// Modal
+// --- Modal System Variables ---
+let currentModalJerseyId = null;
+let selectedModalSize = null;
 
-function applyTheme(theme){
-
-    if(theme==="dark"){
-
-        document.body.classList.add("dark");
-
-        document.getElementById("themeToggle").innerHTML="☀️";
-
+// পেজ লোড হওয়ার সাথে সাথে মডালের কন্টেইনার HTML বডিতে ইনজেক্ট করবে
+function initModalContainer() {
+    if (!document.getElementById('cartModalContainer')) {
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'cartModalContainer';
+        modalDiv.className = 'fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4';
+        document.body.appendChild(modalDiv);
     }
+}
+initModalContainer();
 
-    else{
+// মডাল ওপেন করার ফাংশন
+function openSizeModal(id) {
+    const j = jerseys.find(x => x.id === id);
+    if (!j) return;
+    
+    currentModalJerseyId = id;
+    selectedModalSize = null; // Reset size
+    
+    // টাইপ বের করা (Home / Away / Third)
+    let type = 'Home';
+    const titleLower = j.title.toLowerCase();
+    if (titleLower.includes('away')) type = 'Away';
+    else if (titleLower.includes('third')) type = 'Third';
+    else if (titleLower.includes('goalkeeper') || titleLower.includes('gk')) type = 'Goalkeeper';
 
-        document.body.classList.remove("dark");
+    const modalHtml = `
+        <div class="bg-white rounded-2xl w-full max-w-sm md:max-w-md p-6 shadow-2xl transform transition-all relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition">
+                <i data-lucide="x" style="width:20px;height:20px"></i>
+            </button>
+            
+            <div class="flex gap-4 items-center mb-6 border-b border-gray-100 pb-4">
+                <div class="w-20 h-20 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                     ${j.image ? `<img src="${j.image}" class="w-full h-full object-cover">` : renderJerseySVG(j.colors, 'small')}
+                </div>
+                <div>
+                    <h3 class="font-bold text-royal text-lg leading-tight">${j.title}</h3>
+                    <p class="text-royal font-bold mt-1">৳${j.price.toLocaleString()}</p>
+                </div>
+            </div>
+            
+            <!-- Jersey Details (Club, Type, Version) -->
+            <div class="grid grid-cols-3 gap-3 mb-6 bg-gray-50 p-4 rounded-xl text-center">
+                <div class="border-r border-gray-200">
+                    <span class="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-1">Team</span>
+                    <span class="font-semibold text-gray-800 text-sm truncate">${j.club}</span>
+                </div>
+                <div class="border-r border-gray-200">
+                    <span class="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-1">Type</span>
+                    <span class="font-semibold text-gray-800 text-sm">${type}</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-1">Version</span>
+                    <span class="font-semibold text-gray-800 text-sm">${j.edition}</span>
+                </div>
+            </div>
 
-        document.getElementById("themeToggle").innerHTML="🌙";
-
-    }
-
-    localStorage.setItem("theme",theme);
-
+            <!-- Size Selection -->
+            <div class="mb-6">
+                <p class="text-sm font-semibold mb-3">Select Size <span class="text-red-500">*</span></p>
+                <div class="flex gap-2 justify-between" id="modalSizes">
+                    ${['S','M','L','XL','XXL'].map(s => `
+                        <button onclick="selectModalSize(this, '${s}')" class="modal-size-btn w-12 h-10 rounded-lg border border-gray-200 text-sm font-medium hover:border-royal transition">${s}</button>
+                    `).join('')}
+                </div>
+                <p id="modalSizeError" class="text-red-500 text-xs mt-2 hidden">Please select a size first.</p>
+            </div>
+            
+            <button onclick="confirmAddToCart()" class="btn-primary text-white w-full py-3.5 rounded-xl font-bold text-sm transition shadow-lg shadow-royal/20">
+                Confirm & Add to Cart
+            </button>
+        </div>
+    `;
+    
+    const container = document.getElementById('cartModalContainer');
+    container.innerHTML = modalHtml;
+    container.classList.remove('hidden');
+    container.classList.add('flex');
+    lucide.createIcons(); // আইকন লোড করার জন্য
 }
 
-
-
-function toggleTheme(){
-
-    if(document.body.classList.contains("dark")){
-
-        applyTheme("light");
-
-    }
-
-    else{
-
-        applyTheme("dark");
-
-    }
-
+function closeModal() {
+    const container = document.getElementById('cartModalContainer');
+    container.classList.add('hidden');
+    container.classList.remove('flex');
 }
 
+function selectModalSize(el, size) {
+    selectedModalSize = size;
+    const buttons = document.querySelectorAll('.modal-size-btn');
+    buttons.forEach(b => {
+        b.classList.remove('active', 'border-royal', 'bg-royal', 'text-white');
+        b.classList.add('border-gray-200', 'text-gray-800');
+    });
+    // সিলেক্ট করা বাটন হাইলাইট করা
+    el.classList.add('active', 'border-royal', 'bg-royal', 'text-white');
+    el.classList.remove('border-gray-200', 'text-gray-800');
+    document.getElementById('modalSizeError').classList.add('hidden');
+}
 
-
-window.addEventListener("DOMContentLoaded",()=>{
-
-    const savedTheme=
-
-    localStorage.getItem("theme") || "light";
-
-    applyTheme(savedTheme);
-
-});
+function confirmAddToCart() {
+    if (!selectedModalSize) {
+        document.getElementById('modalSizeError').classList.remove('hidden');
+        return;
+    }
+    
+    const j = jerseys.find(x => x.id === currentModalJerseyId);
+    if (j) {
+        addItem(j, selectedModalSize, 1);
+        closeModal();
+    }
+}
