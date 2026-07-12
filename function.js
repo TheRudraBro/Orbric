@@ -589,38 +589,80 @@ object-contain">
 }
 
 function renderCart() {
-  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  
   document.getElementById('mainContent').innerHTML = `
-    <section class="max-w-5xl mx-auto px-4 py-10 fade-in">
-      <h2 class="text-3xl font-bold text-royal mb-6">Shopping Cart</h2>
-      ${cart.length === 0 ? '<div class="text-center py-16 text-gray-400"><i data-lucide="shopping-bag" style="width:48px;height:48px;margin:0 auto 12px"></i><p>Your cart is empty</p><button onclick="navigate(\'home\')" class="mt-4 btn-primary text-white px-6 py-2 rounded-full text-sm">Continue Shopping</button></div>' : `
-        <div class="grid md:grid-cols-3 gap-6">
+    <section class="max-w-5xl mx-auto px-4 py-8 md:py-10 fade-in">
+      <h2 class="text-2xl md:text-3xl font-bold text-royal mb-6">Shopping Cart</h2>
+      
+      ${cart.length === 0 ? `
+        <div class="text-center py-16 text-gray-400">
+          <i data-lucide="shopping-bag" style="width:48px;height:48px;margin:0 auto 12px"></i>
+          <p>Your cart is empty</p>
+          <button onclick="navigate('home')" class="mt-4 btn-primary text-white px-6 py-2.5 rounded-full text-sm font-medium">Continue Shopping</button>
+        </div>` : `
+        
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+          
+          <!-- Cart Items Section -->
           <div class="md:col-span-2 space-y-4">
             ${cart.map((item,i) => `
-              <div class="bg-white rounded-xl p-4 flex items-center gap-4 shadow-sm border border-gray-100">
-                <div class="w-16 h-16 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0">${renderJerseySVG(item.colors,'tiny')}</div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm truncate">${item.title}</p>
-                  <p class="text-xs text-gray-500">Size: ${item.size} • ${item.edition}</p>
+              <div class="bg-white rounded-xl p-4 flex gap-4 shadow-sm border border-gray-100 relative">
+                
+                <!-- Delete button (Top-Right on Mobile, Far-Right on Desktop) -->
+                <button onclick="removeFromCart(${i})" class="absolute top-4 right-4 md:static md:order-last text-gray-400 hover:text-red-500 transition">
+                  <i data-lucide="trash-2" style="width:18px;height:18px"></i>
+                </button>
+                
+                <!-- Item Image -->
+                <div class="w-20 h-20 md:w-16 md:h-16 rounded-lg bg-gray-50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  ${item.image ? `<img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">` : renderJerseySVG(item.colors,'tiny')}
                 </div>
-                <div class="flex items-center gap-2">
-                  <button onclick="updateCartQty(${i},-1)" class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center text-sm hover:bg-gray-100">−</button>
-                  <span class="text-sm font-medium w-6 text-center">${item.qty}</span>
-                  <button onclick="updateCartQty(${i},1)" class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center text-sm hover:bg-gray-100">+</button>
+                
+                <!-- Item Details (Responsive Stack) -->
+                <div class="flex-1 flex flex-col md:flex-row md:items-center justify-between min-w-0 pr-6 md:pr-0">
+                  
+                  <div class="mb-3 md:mb-0 md:flex-1 md:min-w-0 md:pr-4">
+                    <p class="font-semibold text-sm md:truncate line-clamp-2 md:line-clamp-none text-gray-800 leading-tight">${item.title}</p>
+                    <p class="text-xs text-gray-500 mt-1">Size: ${item.size} • ${item.edition}</p>
+                  </div>
+                  
+                  <div class="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                    <!-- Qty Controls -->
+                    <div class="flex items-center gap-2">
+                      <button onclick="updateCartQty(${i},-1)" class="w-8 h-8 md:w-7 md:h-7 rounded-full border border-gray-200 flex items-center justify-center text-sm hover:bg-royal hover:text-white hover:border-royal transition">−</button>
+                      <span class="text-sm font-bold w-6 text-center text-gray-800">${item.qty}</span>
+                      <button onclick="updateCartQty(${i},1)" class="w-8 h-8 md:w-7 md:h-7 rounded-full border border-gray-200 flex items-center justify-center text-sm hover:bg-royal hover:text-white hover:border-royal transition">+</button>
+                    </div>
+                    
+                    <!-- Price -->
+                    <p class="font-bold text-royal text-sm md:text-base md:w-24 md:text-right">৳${(item.price*item.qty).toLocaleString()}</p>
+                  </div>
+                  
                 </div>
-                <p class="font-bold text-royal text-sm w-20 text-right">৳${(item.price*item.qty).toLocaleString()}</p>
-                <button onclick="removeFromCart(${i})" class="text-gray-400 hover:text-red-500 transition"><i data-lucide="trash-2" style="width:16px;height:16px"></i></button>
               </div>
             `).join('')}
           </div>
-          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-fit sticky top-24">
-            <h3 class="font-bold text-royal mb-4">Order Summary</h3>
-            <div class="flex justify-between text-sm mb-2"><span class="text-gray-500">Subtotal</span><span class="font-medium">৳${total.toLocaleString()}</span></div>
-            <div class="flex justify-between text-sm mb-2"><span class="text-gray-500">Shipping</span><span class="text-green-600 font-medium">Free</span></div>
-            <div class="border-t border-gray-100 my-3"></div>
-            <div class="flex justify-between text-lg font-bold mb-6"><span>Total</span><span class="text-royal">৳${total.toLocaleString()}</span></div>
-            <button onclick="navigate('checkout')" class="btn-primary text-white w-full py-3 rounded-full font-semibold">Proceed to Checkout</button>
+          
+          <!-- Order Summary Section -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-fit md:sticky md:top-24 mt-2 md:mt-0">
+            <h3 class="font-bold text-royal mb-4 text-lg">Order Summary</h3>
+            <div class="flex justify-between text-sm mb-3">
+              <span class="text-gray-500">Subtotal</span>
+              <span class="font-medium text-gray-800">৳${total.toLocaleString()}</span>
+            </div>
+            <div class="flex justify-between text-sm mb-3">
+              <span class="text-gray-500">Shipping</span>
+              <span class="text-green-600 font-bold">Free</span>
+            </div>
+            <div class="border-t border-gray-100 my-4"></div>
+            <div class="flex justify-between text-lg font-bold mb-6">
+                <span class="text-gray-800">Total</span>
+                <span class="text-royal">৳${total.toLocaleString()}</span>
+            </div>
+            <button onclick="navigate('checkout')" class="btn-primary text-white w-full py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-royal/20 transition hover:shadow-royal/40">Proceed to Checkout</button>
           </div>
+          
         </div>
       `}
     </section>`;
