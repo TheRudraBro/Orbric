@@ -326,16 +326,17 @@ let cart = [];
 let currentPage = 'home';
 let wishlist = [];
 let checkoutData = {
-  firstName: '',
-  lastName: '',
-  email: '',
+  name: '',
   phone: '',
-  address: '',
-  city: '',
-  state: '',
-  postal: '',
-  country: '',
-  paymentMethod: 'card'
+  email: '',
+  zila: '',
+  upazila: '',
+  thana: '',
+  addressDetails: '',
+  deliveryArea: 'inside', // Default: Inside Dhaka
+  deliveryCost: 70,       // Default cost
+  paymentMethod: 'full',  // 'full' or 'cod'
+  trxId: ''
 };
 
 // Config
@@ -790,100 +791,223 @@ function checkout() {
 }
 
 function renderCheckout() {
-  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  
+  // Default fallback if somehow lost
+  checkoutData.deliveryCost = checkoutData.deliveryCost || 70;
+  checkoutData.paymentMethod = checkoutData.paymentMethod || 'full';
+  
+  const total = subtotal + checkoutData.deliveryCost;
+
   document.getElementById('mainContent').innerHTML = `
-    <section class="max-w-5xl mx-auto px-4 py-10 fade-in">
-      <button onclick="navigate('cart')" class="text-sm text-gray-500 hover:text-royal mb-6 inline-flex items-center gap-1"><i data-lucide="arrow-left" style="width:14px;height:14px"></i> Back to Cart</button>
-      <h2 class="text-3xl font-bold text-royal mb-8">Checkout</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="md:col-span-2 space-y-6">
+    <section class="max-w-6xl mx-auto px-4 py-8 md:py-10 fade-in">
+      <button onclick="navigate('cart')" class="text-sm text-gray-500 hover:text-royal mb-6 inline-flex items-center gap-1">
+        <i data-lucide="arrow-left" style="width:14px;height:14px"></i> Back to Cart
+      </button>
+      <h2 class="text-2xl md:text-3xl font-bold text-royal mb-8">Checkout</h2>
+      
+      <div class="grid lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Shipping Information -->
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h3 class="font-bold text-royal mb-4 flex items-center gap-2"><i data-lucide="truck" style="width:18px;height:18px"></i> Shipping Address</h3>
+            <h3 class="font-bold text-royal mb-5 flex items-center gap-2">
+              <i data-lucide="map-pin" style="width:18px;height:18px"></i> Shipping Details
+            </h3>
             <div class="grid md:grid-cols-2 gap-4">
-              <input type="text" id="firstName" placeholder="First Name *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('firstName', this.value)">
-              <input type="text" id="lastName" placeholder="Last Name *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('lastName', this.value)">
-              <input type="email" id="email" placeholder="Email Address *" class="md:col-span-2 px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('email', this.value)">
-              <input type="tel" id="phone" placeholder="Phone Number *" class="md:col-span-2 px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('phone', this.value)">
-              <input type="text" id="address" placeholder="Street Address *" class="md:col-span-2 px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('address', this.value)">
-              <input type="text" id="city" placeholder="City *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('city', this.value)">
-              <input type="text" id="state" placeholder="State/Region *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('state', this.value)">
-              <input type="text" id="postal" placeholder="Postal Code *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('postal', this.value)">
-              <input type="text" id="country" placeholder="Country *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('country', this.value)">
+              <input type="text" placeholder="Full Name *" class="md:col-span-2 px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('name', this.value)" value="${checkoutData.name||''}">
+              <input type="tel" placeholder="Phone Number *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('phone', this.value)" value="${checkoutData.phone||''}">
+              <input type="email" placeholder="Email Address *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('email', this.value)" value="${checkoutData.email||''}">
+              
+              <input type="text" placeholder="Zila (District) *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('zila', this.value)" value="${checkoutData.zila||''}">
+              <input type="text" placeholder="Upazila *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('upazila', this.value)" value="${checkoutData.upazila||''}">
+              <input type="text" placeholder="Thana / Police Station *" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('thana', this.value)" value="${checkoutData.thana||''}">
+              
+              <input type="text" placeholder="Detailed Address (House, Road, Area) *" class="md:col-span-2 px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="updateCheckoutData('addressDetails', this.value)" value="${checkoutData.addressDetails||''}">
             </div>
           </div>
-          
+
+          <!-- Delivery Area -->
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <h3 class="font-bold text-royal mb-4 flex items-center gap-2"><i data-lucide="credit-card" style="width:18px;height:18px"></i> Payment Method</h3>
-            <div class="space-y-3">
-              <label class="flex items-center p-4 rounded-lg border-2 cursor-pointer transition" id="cardOption" onclick="selectPayment('card')">
-                <input type="radio" name="payment" value="card" class="w-4 h-4" checked>
-                <span class="ml-3 font-medium text-sm">Credit/Debit Card</span>
+            <h3 class="font-bold text-royal mb-5 flex items-center gap-2">
+              <i data-lucide="truck" style="width:18px;height:18px"></i> Delivery Area
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <label id="dlv-inside" class="flex flex-col p-4 rounded-xl border-2 ${checkoutData.deliveryCost===70 ? 'border-royal bg-royal/5' : 'border-gray-100'} cursor-pointer transition relative" onclick="updateDeliveryOption('inside')">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-gray-800 text-sm">Inside Dhaka</span>
+                  <span class="font-bold text-royal">৳70</span>
+                </div>
+                <span class="text-xs text-gray-500">Delivery in 24-48 hours</span>
               </label>
-              <label class="flex items-center p-4 rounded-lg border-2 cursor-pointer transition" id="bankOption" onclick="selectPayment('bank')">
-                <input type="radio" name="payment" value="bank" class="w-4 h-4">
-                <span class="ml-3 font-medium text-sm">Bank Transfer</span>
-              </label>
-              <label class="flex items-center p-4 rounded-lg border-2 cursor-pointer transition" id="mobileOption" onclick="selectPayment('mobile')">
-                <input type="radio" name="payment" value="mobile" class="w-4 h-4">
-                <span class="ml-3 font-medium text-sm">Mobile Wallet (bKash, Nagad)</span>
+              
+              <label id="dlv-outside" class="flex flex-col p-4 rounded-xl border-2 ${checkoutData.deliveryCost===120 ? 'border-royal bg-royal/5' : 'border-gray-100'} cursor-pointer transition relative" onclick="updateDeliveryOption('outside')">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-bold text-gray-800 text-sm">Outside Dhaka</span>
+                  <span class="font-bold text-royal">৳120</span>
+                </div>
+                <span class="text-xs text-gray-500">Delivery in 48-72 hours</span>
               </label>
             </div>
+          </div>
+
+          <!-- Payment Options & Instructions -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h3 class="font-bold text-royal mb-5 flex items-center gap-2">
+              <i data-lucide="credit-card" style="width:18px;height:18px"></i> Payment Method
+            </h3>
             
-            <div id="cardDetails" class="mt-6 space-y-4">
-              <input type="text" placeholder="Cardholder Name *" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition">
-              <input type="text" placeholder="Card Number (1234-5678-9012-3456) *" maxlength="19" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="formatCardNumber(this)">
-              <div class="grid grid-cols-2 gap-4">
-                <input type="text" placeholder="MM/YY *" maxlength="5" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition" oninput="formatExpiry(this)">
-                <input type="text" placeholder="CVV *" maxlength="4" class="px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition">
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+              <label id="pay-full" class="flex flex-col p-4 rounded-xl border-2 ${checkoutData.paymentMethod==='full' ? 'border-royal bg-royal/5' : 'border-gray-100'} cursor-pointer transition" onclick="updatePaymentOption('full')">
+                <span class="font-bold text-gray-800 text-sm mb-1">Online Full Payment</span>
+                <span class="text-xs text-gray-500">Pay total amount now (bKash/Nagad/Rocket)</span>
+              </label>
+              
+              <label id="pay-cod" class="flex flex-col p-4 rounded-xl border-2 ${checkoutData.paymentMethod==='cod' ? 'border-royal bg-royal/5' : 'border-gray-100'} cursor-pointer transition" onclick="updatePaymentOption('cod')">
+                <span class="font-bold text-gray-800 text-sm mb-1">Cash on Delivery</span>
+                <span class="text-xs text-gray-500">Pay ONLY delivery charge now to confirm</span>
+              </label>
+            </div>
+
+            <!-- Transaction Input Block -->
+            <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100">
+              <p class="text-sm text-gray-700 mb-3">Please Send Money <span id="paymentAmountInstruction" class="font-bold text-royal text-lg">৳${(checkoutData.paymentMethod==='full' ? total : checkoutData.deliveryCost).toLocaleString()}</span> via <b>bKash, Nagad or Rocket</b> to this number:</p>
+              
+              <div class="flex items-center gap-2 mb-5">
+                <span class="bg-white px-5 py-2.5 rounded-lg font-bold tracking-widest border border-gray-200 text-royal text-lg shadow-sm">01568931456</span>
+                <span class="text-xs text-gray-500 font-medium px-2 py-1 bg-gray-100 rounded">(Personal)</span>
+              </div>
+              
+              <div>
+                <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Enter Transaction ID <span class="text-red-500">*</span></label>
+                <input type="text" placeholder="e.g. 9XZ8B7Q2A" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition uppercase font-medium" oninput="updateCheckoutData('trxId', this.value)" value="${checkoutData.trxId||''}">
               </div>
             </div>
-            
-            <div id="bankDetails" class="mt-6 hidden">
-              <div class="bg-gold/5 rounded-lg p-4 text-sm text-gray-600">
-                <p class="font-semibold mb-2">Bank Transfer Instructions:</p>
-                <p>Bank: Dhaka Bank Limited</p>
-                <p>Account: ORBRIC-25486</p>
-                <p>SWIFT Code: DBBLBDDH</p>
-                <p class="mt-2 text-gold font-medium">Please use your order ID as reference.</p>
-              </div>
-            </div>
-            
-            <div id="mobileDetails" class="mt-6 hidden">
-              <input type="text" placeholder="Mobile Number (e.g., +880 1XX XXX XXXX) *" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-royal focus:ring-2 focus:ring-royal/10 outline-none text-sm transition">
-              <p class="text-xs text-gray-500 mt-2">Supported: bKash, Nagad, Rocket</p>
-            </div>
+
           </div>
         </div>
         
-        <div class="md:col-span-1">
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 sticky top-24">
-            <h3 class="font-bold text-royal mb-4">Order Summary</h3>
-            <div class="space-y-3 pb-4 border-b border-gray-100 max-h-64 overflow-y-auto">
+            <h3 class="font-bold text-royal mb-4 text-lg border-b border-gray-100 pb-3">Order Summary</h3>
+            
+            <div class="space-y-3 pb-4 border-b border-gray-100 max-h-64 overflow-y-auto pr-2 mt-4">
               ${cart.map(item => `
                 <div class="flex justify-between text-xs">
-                  <span class="text-gray-600">${item.club}<br><span class="text-[10px]">Size ${item.size} × ${item.qty}</span></span>
-                  <span class="font-semibold">৳${(item.price * item.qty).toLocaleString()}</span>
+                  <span class="text-gray-600 pr-2">${item.club} - ${item.title}<br><span class="font-medium text-gray-400">Size: ${item.size} × ${item.qty}</span></span>
+                  <span class="font-bold text-gray-800">৳${(item.price * item.qty).toLocaleString()}</span>
                 </div>
               `).join('')}
             </div>
-            <div class="space-y-2 mt-4 mb-4">
-              <div class="flex justify-between text-sm"><span class="text-gray-500">Subtotal</span><span class="font-medium">৳${total.toLocaleString()}</span></div>
-              <div class="flex justify-between text-sm"><span class="text-gray-500">Shipping</span><span class="text-green-600 font-medium">Free</span></div>
-              <div class="flex justify-between text-sm"><span class="text-gray-500">Tax</span><span class="font-medium">৳${Math.round(total * 0.05).toLocaleString()}</span></div>
+            
+            <div class="space-y-3 mt-4 mb-4">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Subtotal</span>
+                <span class="font-bold text-gray-800">৳${subtotal.toLocaleString()}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Delivery Charge</span>
+                <span id="summaryShipping" class="font-bold text-royal">+ ৳${checkoutData.deliveryCost}</span>
+              </div>
             </div>
+            
             <div class="border-t border-gray-100 my-4"></div>
-            <div class="flex justify-between text-lg font-bold mb-6">
-              <span>Total</span>
-              <span class="text-royal">৳${(total + Math.round(total * 0.05)).toLocaleString()}</span>
+            
+            <div class="flex justify-between items-center mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
+              <span class="text-lg font-bold text-gray-800">Total</span>
+              <span id="summaryTotal" class="text-2xl font-black text-royal">৳${total.toLocaleString()}</span>
             </div>
-            <p id="checkoutError" class="text-red-500 text-xs mb-3 hidden text-center"></p>
-            <button onclick="validateAndPlaceOrder()" class="btn-primary text-white w-full py-3 rounded-full font-semibold">Place Order</button>
-            <button onclick="navigate('cart')" class="border-2 border-gray-200 text-gray-700 w-full py-2 rounded-full font-medium mt-3 hover:border-royal hover:text-royal transition">Continue Shopping</button>
+            
+            <p id="checkoutError" class="text-red-500 text-xs mb-4 hidden text-center bg-red-50 p-3 rounded-lg font-medium"></p>
+            
+            <button onclick="validateAndPlaceOrder()" class="btn-primary text-white w-full py-4 rounded-xl font-bold text-sm shadow-lg shadow-royal/20 transition hover:shadow-royal/40 flex items-center justify-center gap-2">
+              <i data-lucide="check-circle" style="width:18px;height:18px"></i> Place Order
+            </button>
           </div>
         </div>
+        
       </div>
     </section>`;
-  setupPaymentOptions();
+    
+  lucide.createIcons();
+}
+
+// Delivery change handler
+function updateDeliveryOption(area) {
+  checkoutData.deliveryArea = area;
+  checkoutData.deliveryCost = (area === 'inside') ? 70 : 120;
+  
+  // UI Update
+  document.getElementById('dlv-inside').className = `flex flex-col p-4 rounded-xl border-2 cursor-pointer transition relative ${area === 'inside' ? 'border-royal bg-royal/5' : 'border-gray-100'}`;
+  document.getElementById('dlv-outside').className = `flex flex-col p-4 rounded-xl border-2 cursor-pointer transition relative ${area === 'outside' ? 'border-royal bg-royal/5' : 'border-gray-100'}`;
+  
+  updateOrderSummaryTotals();
+}
+
+// Payment method change handler
+function updatePaymentOption(method) {
+  checkoutData.paymentMethod = method;
+  
+  // UI Update
+  document.getElementById('pay-full').className = `flex flex-col p-4 rounded-xl border-2 cursor-pointer transition ${method === 'full' ? 'border-royal bg-royal/5' : 'border-gray-100'}`;
+  document.getElementById('pay-cod').className = `flex flex-col p-4 rounded-xl border-2 cursor-pointer transition ${method === 'cod' ? 'border-royal bg-royal/5' : 'border-gray-100'}`;
+  
+  updateOrderSummaryTotals();
+}
+
+// Re-calculates and updates text without reloading page
+function updateOrderSummaryTotals() {
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const total = subtotal + checkoutData.deliveryCost;
+  
+  document.getElementById('summaryShipping').innerText = `+ ৳${checkoutData.deliveryCost}`;
+  document.getElementById('summaryTotal').innerText = `৳${total.toLocaleString()}`;
+  
+  const payNowAmount = (checkoutData.paymentMethod === 'full') ? total : checkoutData.deliveryCost;
+  document.getElementById('paymentAmountInstruction').innerText = `৳${payNowAmount.toLocaleString()}`;
+}
+
+function updateCheckoutData(field, value) {
+  checkoutData[field] = value;
+}
+
+// Validating the new inputs
+function validateAndPlaceOrder() {
+  const requiredFields = {
+    name: "Full Name",
+    phone: "Phone Number",
+    email: "Email Address",
+    zila: "Zila (District)",
+    upazila: "Upazila",
+    thana: "Thana",
+    addressDetails: "Detailed Address",
+    trxId: "Transaction ID"
+  };
+  
+  const missing = [];
+  for (const [key, label] of Object.entries(requiredFields)) {
+    if (!checkoutData[key] || !checkoutData[key].trim()) {
+      missing.push(label);
+    }
+  }
+  
+  const errorEl = document.getElementById('checkoutError');
+  if (missing.length > 0) {
+    errorEl.innerHTML = `<b>Missing Fields:</b><br/>${missing.join(', ')}`;
+    errorEl.classList.remove('hidden');
+    return;
+  }
+  
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(checkoutData.email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.classList.remove('hidden');
+    return;
+  }
+
+  errorEl.classList.add('hidden');
+  checkout(); 
 }
 
 function updateCheckoutData(field, value) {
