@@ -314,11 +314,11 @@ const jerseys = [
     price:1350},
   {id:102, 
     club:'Real Madrid', 
-    title:'Real Madrid 2016-17 Classic', 
+    title:'Real Madrid 2017-18 Classic', 
     edition:'Retro', 
     league:'La Liga', 
     retro:true, 
-    colors:['#ffffff','#6c63ff'], 
+    image:'Retro/madrid1718.jpg',
     price:1350},
   {id:103, 
     club:'AC Milan', 
@@ -326,23 +326,15 @@ const jerseys = [
     edition:'Retro', 
     league:'Serie A', 
     retro:true, 
-    colors:['#fb090b','#000000'], 
+    image:'Retro/acmilan0607.jpg',
     price:1350},
   {id:104, 
-    club:'Brazil', 
-    title:'Brazil 2002 World Cup Winner', 
-    edition:'Retro', 
-    league:'International', 
-    retro:true, 
-    colors:['#ffdf00','#009739'], 
-    price:1350},
-  {id:105, 
     club:'Manchester United', 
     title:'Manchester United 2008 UCL Final', 
     edition:'Retro', 
     league:'Premier League', 
     retro:true, 
-    colors:['#da291c','#000000'], 
+    image:'Retro/manunited0708.jpg',
     price:1350},
 ];
 
@@ -480,7 +472,7 @@ function renderHome() {
         ${featured.map(j => renderCard(j)).join('')}
       </div>
     </section>
-    <section class="max-w-7xl mx-auto px-4 py-12">
+   <section class="max-w-7xl mx-auto px-4 py-12">
       <div class="flex items-center justify-between mb-8">
         <div>
           <p class="text-gold uppercase tracking-widest text-xs font-bold mb-1">Exclusive</p>
@@ -488,24 +480,9 @@ function renderHome() {
         </div>
         <a href="#" onclick="navigate('retro')" class="text-sm text-gold font-medium hover:underline">View All →</a>
       </div>
+   
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        ${jerseys.filter(j => j.retro).slice(0, 3).map(j => `
-          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer relative group" onclick="navigate('product',${j.id})">
-            <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">EXCLUSIVE</div>
-            <div class="h-56 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-          <img
-src="${j.image}"
-alt="${j.title}"
-class="w-full h-full object-contain p-4"
-/>
-            </div>
-            <div class="p-5">
-              <span class="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-semibold">Retro Classic</span>
-              <h3 class="font-semibold mt-2 text-gray-800">${j.title}</h3>
-              <p class="text-royal font-bold mt-2">৳${j.price.toLocaleString()}</p>
-            </div>
-          </div>
-        `).join('')}
+        ${jerseys.filter(j => j.retro).slice(0, 3).map(j => renderCard(j)).join('')}
       </div>
     </section>
     <section class="max-w-7xl mx-auto px-4 py-12">
@@ -567,19 +544,8 @@ function renderRetro() {
         <h2 class="text-3xl font-display font-bold text-royal">Retro Collection</h2>
         <p class="text-gray-500 mt-2">Iconic kits that defined football history — ৳1,350</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        ${items.map(j => `
-          <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer" onclick="navigate('product',${j.id})">
-        <div class="h-64 w-full flex items-center justify-center bg-gray-50 overflow-hidden cursor-pointer">
-  ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
-</div>
-            <div class="p-5">
-              <span class="text-xs bg-gold/10 text-gold px-2 py-0.5 rounded-full font-semibold">Retro Classic</span>
-              <h3 class="font-semibold mt-2 text-gray-800">${j.title}</h3>
-              <p class="text-royal font-bold mt-2">৳${j.price.toLocaleString()}</p>
-            </div>
-          </div>
-        `).join('')}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        ${items.map(j => renderCard(j)).join('')}
       </div>
     </section>`;
 }
@@ -719,7 +685,7 @@ function renderCart() {
             </div>
             <div class="flex justify-between text-sm mb-3">
               <span class="text-gray-500">Shipping</span>
-              <span class="text-green-600 font-bold">Free</span>
+              <span class="text-green-600 font-bold">Based On Category</span>
             </div>
             <div class="border-t border-gray-100 my-4"></div>
             <div class="flex justify-between text-lg font-bold mb-6">
