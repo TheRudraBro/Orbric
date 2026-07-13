@@ -114,43 +114,89 @@ function navigate(page, data) {
   lucide.createIcons();
 }
 
+// ---------------------------------------------------------------------------
 function renderHome() {
   const featured = jerseys.filter(j=>!j.retro).slice(0,8);
   document.getElementById('mainContent').innerHTML = `
-   <section class="relative py-12 md:py-20 px-4 overflow-hidden flex items-center justify-center bg-gradient-to-b from-surface to-gray-50 border-b border-gray-100">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-royal/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-gold/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-      <div class="max-w-4xl mx-auto text-center fade-in z-10 relative">
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm mb-5">
+   
+<!-- Custom Animation Styles for Hero Overlay -->
+   <style>
+     @keyframes playerSlideshow {
+       0% { opacity: 0; transform: scale(1.05); }
+       15% { opacity: 0.3; transform: scale(1.02); } 
+       33% { opacity: 0.3; transform: scale(1); }  
+       48% { opacity: 0; transform: scale(0.98); } 
+       100% { opacity: 0; transform: scale(0.95); }  
+     }
+     .hero-player-bg {
+       position: absolute;
+       inset: 0;
+       background-size: cover;
+       background-position: center 20%;
+     
+       animation: playerSlideshow 9s infinite ease-in-out; 
+       z-index: 0;
+       filter: grayscale(10%); 
+       opacity: 0;
+     }
+  
+   
+     .bg-player-1 { animation-delay: 0s; background-image: url('https://i.ibb.co.com/MyvQ8Wy8/wallpaperflare-com-wallpaper-21.jpg'); }
+     .bg-player-2 { animation-delay: 3s; background-image: url('https://i.ibb.co.com/Df45WBPn/wallpaperflare-com-wallpaper-22.jpg'); }
+     .bg-player-3 { animation-delay: 6s; background-image: url('https://i.ibb.co.com/PLqnCWZ/wallpaperflare-com-wallpaper-23.jpg'); }
+   </style>
+
+   <section class="relative py-16 md:py-24 px-4 overflow-hidden flex items-center justify-center min-h-[60vh] border-b border-gray-100 bg-surface">
+      
+      <!-- Animated Background Players -->
+      <div class="absolute inset-0 bg-white z-0"></div>
+      <div class="hero-player-bg bg-player-1"></div>
+      <div class="hero-player-bg bg-player-2"></div>
+      <div class="hero-player-bg bg-player-3"></div>
+      
+     
+     <!-- Gradient Overlay (ওপাসিটি কমানো হয়েছে) -->
+<div class="absolute inset-0 bg-gradient-to-b from-surface/10 via-surface/30 to-surface/50 z-10"></div>
+      
+      <!-- Decorative Blurs -->
+      <div class="absolute top-1/2 left-1/4 -translate-y-1/2 w-[400px] h-[400px] bg-royal/10 rounded-full blur-3xl z-10 pointer-events-none"></div>
+      <div class="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-gold/10 rounded-full blur-3xl z-10 pointer-events-none"></div>
+      
+      <div class="max-w-4xl mx-auto text-center fade-in z-20 relative">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm mb-5">
             <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
             <p class="text-[10px] md:text-xs font-bold text-royal uppercase tracking-widest">Season 26/27 Collection</p>
         </div>
-        <h1 id="heroTagline" class="text-4xl md:text-5xl lg:text-6xl font-display font-900 text-royal leading-tight tracking-tight mb-4">
+        
+        <h1 id="heroTagline" class="text-4xl md:text-5xl lg:text-7xl font-display font-900 text-royal leading-[1.15] tracking-tight mb-5 drop-shadow-sm">
           ${window.elementSdk.config.hero_tagline || defaultConfig.hero_tagline}
         </h1>
-        <p id="heroSubtitle" class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+        
+        <p id="heroSubtitle" class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10 font-medium">
           ${window.elementSdk.config.hero_subtitle || defaultConfig.hero_subtitle}. Experience the authentic feel of the beautiful game with premium quality fabric.
         </p>
+        
         <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
-          <button onclick="navigate('player')" class="btn-primary text-white px-7 py-3 rounded-full font-bold text-sm hover:shadow-xl hover:shadow-royal/20 transition-all transform hover:-translate-y-1 w-full sm:w-auto">
+          <button onclick="navigate('player')" class="btn-primary text-white px-8 py-3.5 rounded-full font-bold text-sm hover:shadow-xl hover:shadow-royal/20 transition-all transform hover:-translate-y-1 w-full sm:w-auto">
             Shop Player Edition
           </button>
-          <button onclick="navigate('fan')" class="bg-white border border-gray-200 text-royal px-7 py-3 rounded-full font-bold text-sm hover:border-royal transition-all transform hover:-translate-y-1 shadow-sm w-full sm:w-auto">
+          <button onclick="navigate('fan')" class="bg-white/90 backdrop-blur border border-gray-200 text-royal px-8 py-3.5 rounded-full font-bold text-sm hover:border-royal transition-all transform hover:-translate-y-1 shadow-sm w-full sm:w-auto">
             Explore Fan Edition
           </button>
         </div>
-        <div class="mt-10 pt-6 border-t border-gray-200/60 flex flex-wrap justify-center items-center gap-6 md:gap-12 text-gray-500">
+        
+        <div class="mt-12 pt-6 border-t border-gray-200/60 flex flex-wrap justify-center items-center gap-6 md:gap-12 text-gray-500">
             <div class="flex items-center gap-2 transition hover:text-royal">
                 <i data-lucide="shield-check" style="width:18px;height:18px"></i>
-                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">100% Authentic</span>
+                <span class="text-xs md:text-sm font-bold tracking-wider uppercase">100% Authentic</span>
             </div>
             <div class="flex items-center gap-2 transition hover:text-royal">
                 <i data-lucide="truck" style="width:18px;height:18px"></i>
-                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Fast Delivery</span>
+                <span class="text-xs md:text-sm font-bold tracking-wider uppercase">Fast Delivery</span>
             </div>
             <div class="flex items-center gap-2 transition hover:text-royal">
                 <i data-lucide="award" style="width:18px;height:18px"></i>
-                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Premium Quality</span>
+                <span class="text-xs md:text-sm font-bold tracking-wider uppercase">Premium Quality</span>
             </div>
         </div>
       </div>
@@ -161,8 +207,11 @@ function renderHome() {
         <h2 class="text-2xl font-bold text-royal">Featured Jerseys</h2>
         <a href="#" onclick="navigate('player')" class="text-sm text-gold font-medium hover:underline">View All →</a>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        ${featured.map(j => renderCard(j)).join('')}
+      <!-- Responsive Scroll Wrapper -->
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-visible lg:pb-0 lg:px-0 lg:mx-0 hidden-scrollbar">
+        <div class="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-6">
+          ${featured.map(j => `<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('')}
+        </div>
       </div>
     </section>
     
@@ -174,8 +223,11 @@ function renderHome() {
         </div>
         <a href="#" onclick="navigate('retro')" class="text-sm text-gold font-medium hover:underline">View All →</a>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        ${jerseys.filter(j => j.retro).slice(0, 3).map(j => renderCard(j)).join('')}
+      <!-- Responsive Scroll Wrapper -->
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-visible lg:pb-0 lg:px-0 lg:mx-0 hidden-scrollbar">
+        <div class="flex gap-4 lg:grid lg:grid-cols-3 lg:gap-6">
+          ${jerseys.filter(j => j.retro).slice(0, 3).map(j => `<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('')}
+        </div>
       </div>
     </section>
     
@@ -185,13 +237,13 @@ function renderHome() {
         <h2 class="text-2xl font-bold text-royal">Discount Jerseys</h2>
         <p class="text-gray-500 text-sm mt-1">Up to 40% off selected items</p>
       </div>
-      <div class="overflow-x-auto pb-2 -mx-4 px-4 lg:overflow-x-visible">
-        <div class="flex gap-4 lg:grid lg:grid-cols-1 lg:sm:grid-cols-2 lg:grid-cols-4 min-w-min lg:min-w-full">
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-x-visible hidden-scrollbar">
+        <div class="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-6 min-w-min lg:min-w-full">
           ${jerseys.filter(j => !j.retro).slice(0, 8).map(j => {
             const discount = j.edition === 'Player' ? 25 : 15;
             const discountedPrice = Math.round(j.price * (1 - discount / 100));
             return `
-            <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+            <div class="flex-shrink-0 w-[260px] lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col h-full">
               <div class="relative">
                 <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden" onclick="navigate('product',${j.id})">
                   ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
@@ -223,8 +275,11 @@ function renderEdition(edition) {
     <section class="max-w-7xl mx-auto px-4 py-10 fade-in">
       <h2 class="text-3xl font-bold text-royal mb-2">${edition} Edition</h2>
       <p class="text-gray-500 mb-8">${edition === 'Player' ? 'Authentic match-day quality — ৳1,150' : 'Stadium-ready style — ৳850'}</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        ${items.map(j => renderCard(j)).join('')}
+      <!-- Responsive Scroll Wrapper -->
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-visible lg:pb-0 lg:px-0 lg:mx-0">
+        <div class="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-6">
+          ${items.map(j => `<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('')}
+        </div>
       </div>
     </section>`;
 }
@@ -238,8 +293,11 @@ function renderRetro() {
         <h2 class="text-3xl font-display font-bold text-royal">Retro Collection</h2>
         <p class="text-gray-500 mt-2">Iconic kits that defined football history — ৳1,350</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        ${items.map(j => renderCard(j)).join('')}
+      <!-- Responsive Scroll Wrapper -->
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-visible lg:pb-0 lg:px-0 lg:mx-0">
+        <div class="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-6">
+          ${items.map(j => `<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('')}
+        </div>
       </div>
     </section>`;
 }
@@ -253,17 +311,186 @@ function renderLeague(league) {
       <div class="flex flex-wrap gap-2 mb-8">
         ${clubs.map(c => `<button onclick="filterClub('${c}','${league}')" class="px-4 py-2 rounded-full text-sm font-medium border border-gray-200 hover:border-royal hover:text-royal transition">${c}</button>`).join('')}
       </div>
-      <div id="leagueJerseys" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        ${jerseys.filter(j=>j.league===league&&!j.retro).map(j=>renderCard(j)).join('')}
+      <!-- Responsive Scroll Wrapper -->
+      <div class="overflow-x-auto pb-4 -mx-4 px-4 lg:overflow-visible lg:pb-0 lg:px-0 lg:mx-0">
+        <div id="leagueJerseys" class="flex gap-4 lg:grid lg:grid-cols-4 lg:gap-6">
+          ${jerseys.filter(j=>j.league===league&&!j.retro).map(j=>`<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('')}
+        </div>
       </div>
     </section>`;
 }
 
 function filterClub(club, league) {
   const items = jerseys.filter(j => j.club === club && !j.retro);
-  document.getElementById('leagueJerseys').innerHTML = items.length ? items.map(j=>renderCard(j)).join('') : '<p class="col-span-4 text-center text-gray-400 py-8">No jerseys found for this club yet.</p>';
+  document.getElementById('leagueJerseys').innerHTML = items.length ? 
+    items.map(j=>`<div class="flex-shrink-0 w-[260px] lg:w-auto h-full">${renderCard(j)}</div>`).join('') : 
+    '<p class="text-center text-gray-400 py-8 w-full lg:col-span-4">No jerseys found for this club yet.</p>';
   lucide.createIcons();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------
+
+// function renderHome() {
+//   const featured = jerseys.filter(j=>!j.retro).slice(0,8);
+//   document.getElementById('mainContent').innerHTML = `
+//    <section class="relative py-12 md:py-20 px-4 overflow-hidden flex items-center justify-center bg-gradient-to-b from-surface to-gray-50 border-b border-gray-100">
+//       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-royal/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+//       <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-gold/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+//       <div class="max-w-4xl mx-auto text-center fade-in z-10 relative">
+//         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm mb-5">
+//             <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+//             <p class="text-[10px] md:text-xs font-bold text-royal uppercase tracking-widest">Season 26/27 Collection</p>
+//         </div>
+//         <h1 id="heroTagline" class="text-4xl md:text-5xl lg:text-6xl font-display font-900 text-royal leading-tight tracking-tight mb-4">
+//           ${window.elementSdk.config.hero_tagline || defaultConfig.hero_tagline}
+//         </h1>
+//         <p id="heroSubtitle" class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+//           ${window.elementSdk.config.hero_subtitle || defaultConfig.hero_subtitle}. Experience the authentic feel of the beautiful game with premium quality fabric.
+//         </p>
+//         <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+//           <button onclick="navigate('player')" class="btn-primary text-white px-7 py-3 rounded-full font-bold text-sm hover:shadow-xl hover:shadow-royal/20 transition-all transform hover:-translate-y-1 w-full sm:w-auto">
+//             Shop Player Edition
+//           </button>
+//           <button onclick="navigate('fan')" class="bg-white border border-gray-200 text-royal px-7 py-3 rounded-full font-bold text-sm hover:border-royal transition-all transform hover:-translate-y-1 shadow-sm w-full sm:w-auto">
+//             Explore Fan Edition
+//           </button>
+//         </div>
+//         <div class="mt-10 pt-6 border-t border-gray-200/60 flex flex-wrap justify-center items-center gap-6 md:gap-12 text-gray-500">
+//             <div class="flex items-center gap-2 transition hover:text-royal">
+//                 <i data-lucide="shield-check" style="width:18px;height:18px"></i>
+//                 <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">100% Authentic</span>
+//             </div>
+//             <div class="flex items-center gap-2 transition hover:text-royal">
+//                 <i data-lucide="truck" style="width:18px;height:18px"></i>
+//                 <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Fast Delivery</span>
+//             </div>
+//             <div class="flex items-center gap-2 transition hover:text-royal">
+//                 <i data-lucide="award" style="width:18px;height:18px"></i>
+//                 <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Premium Quality</span>
+//             </div>
+//         </div>
+//       </div>
+//     </section>
+    
+//     <section class="max-w-7xl mx-auto px-4 py-12">
+//       <div class="flex items-center justify-between mb-8">
+//         <h2 class="text-2xl font-bold text-royal">Featured Jerseys</h2>
+//         <a href="#" onclick="navigate('player')" class="text-sm text-gold font-medium hover:underline">View All →</a>
+//       </div>
+//       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//         ${featured.map(j => renderCard(j)).join('')}
+//       </div>
+//     </section>
+    
+//    <section class="max-w-7xl mx-auto px-4 py-12">
+//       <div class="flex items-center justify-between mb-8">
+//         <div>
+//           <p class="text-gold uppercase tracking-widest text-xs font-bold mb-1">Exclusive</p>
+//           <h2 class="text-2xl font-bold text-royal">Special Jerseys</h2>
+//         </div>
+//         <a href="#" onclick="navigate('retro')" class="text-sm text-gold font-medium hover:underline">View All →</a>
+//       </div>
+//       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//         ${jerseys.filter(j => j.retro).slice(0, 3).map(j => renderCard(j)).join('')}
+//       </div>
+//     </section>
+    
+//     <section class="max-w-7xl mx-auto px-4 py-12">
+//       <div class="mb-8">
+//         <p class="text-gold uppercase tracking-widest text-xs font-bold mb-1">Limited Time</p>
+//         <h2 class="text-2xl font-bold text-royal">Discount Jerseys</h2>
+//         <p class="text-gray-500 text-sm mt-1">Up to 40% off selected items</p>
+//       </div>
+//       <div class="overflow-x-auto pb-2 -mx-4 px-4 lg:overflow-x-visible">
+//         <div class="flex gap-4 lg:grid lg:grid-cols-1 lg:sm:grid-cols-2 lg:grid-cols-4 min-w-min lg:min-w-full">
+//           ${jerseys.filter(j => [21,22,23,24,25,26,27,28].includes(j.id)).map(j => {
+//             const discount = j.edition === 'Player' ? 25 : 15;
+//             const discountedPrice = Math.round(j.price * (1 - discount / 100));
+//             return `
+//             <div class="flex-shrink-0 w-64 lg:w-auto card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+//               <div class="relative">
+//                 <div class="h-64 w-full flex items-center justify-center bg-gray-50 cursor-pointer overflow-hidden" onclick="navigate('product',${j.id})">
+//                   ${j.image ? `<img src="${j.image}" alt="${j.title}" class="w-full h-full object-cover product-image">` : renderJerseySVG(j.colors,'medium')}
+//                 </div>
+//                 <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">-${discount}%</div>
+//               </div>
+//               <div class="p-4 flex flex-col flex-1">
+//                 <span class="text-[10px] uppercase tracking-wider text-gold font-bold">${j.edition}</span>
+//                 <h3 class="font-semibold text-sm mt-1 text-gray-800 leading-tight cursor-pointer hover:text-royal transition" onclick="navigate('product',${j.id})">${j.title}</h3>
+//                 <div class="flex items-center gap-2 mt-2 flex-1">
+//                   <p class="text-royal font-bold">৳${discountedPrice.toLocaleString()}</p>
+//                   <p class="text-gray-400 text-xs line-through">৳${j.price.toLocaleString()}</p>
+//                 </div>
+//                 <div class="mt-4 pt-3 border-t border-gray-50">
+//                   <button onclick="event.stopPropagation();openSizeModal(${j.id}, ${discountedPrice})" class="btn-primary text-white text-xs py-2.5 rounded-xl w-full font-bold">Add To Cart</button>
+//                 </div>
+//               </div>
+//             </div>
+//             `;
+//           }).join('')}
+//         </div>
+//       </div>
+//     </section>`;
+// }
+
+// function renderEdition(edition) {
+//   const items = jerseys.filter(j => j.edition === edition);
+//   document.getElementById('mainContent').innerHTML = `
+//     <section class="max-w-7xl mx-auto px-4 py-10 fade-in">
+//       <h2 class="text-3xl font-bold text-royal mb-2">${edition} Edition</h2>
+//       <p class="text-gray-500 mb-8">${edition === 'Player' ? 'Authentic match-day quality — ৳1,150' : 'Stadium-ready style — ৳850'}</p>
+//       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//         ${items.map(j => renderCard(j)).join('')}
+//       </div>
+//     </section>`;
+// }
+
+// function renderRetro() {
+//   const items = jerseys.filter(j => j.retro);
+//   document.getElementById('mainContent').innerHTML = `
+//     <section class="max-w-7xl mx-auto px-4 py-10 fade-in">
+//       <div class="text-center mb-10">
+//         <p class="text-gold uppercase tracking-widest text-xs font-bold mb-1">Exclusive</p>
+//         <h2 class="text-3xl font-display font-bold text-royal">Retro Collection</h2>
+//         <p class="text-gray-500 mt-2">Iconic kits that defined football history — ৳1,350</p>
+//       </div>
+//       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//         ${items.map(j => renderCard(j)).join('')}
+//       </div>
+//     </section>`;
+// }
+
+// function renderLeague(league) {
+//   const clubs = leagueClubs[league] || [];
+//   document.getElementById('mainContent').innerHTML = `
+//     <section class="max-w-7xl mx-auto px-4 py-10 fade-in">
+//       <h2 class="text-3xl font-bold text-royal mb-2">${league === 'UCL' ? 'UEFA Champions League' : league}</h2>
+//       <p class="text-gray-500 mb-6">Select a club to view jerseys</p>
+//       <div class="flex flex-wrap gap-2 mb-8">
+//         ${clubs.map(c => `<button onclick="filterClub('${c}','${league}')" class="px-4 py-2 rounded-full text-sm font-medium border border-gray-200 hover:border-royal hover:text-royal transition">${c}</button>`).join('')}
+//       </div>
+//       <div id="leagueJerseys" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//         ${jerseys.filter(j=>j.league===league&&!j.retro).map(j=>renderCard(j)).join('')}
+//       </div>
+//     </section>`;
+// }
+
+// function filterClub(club, league) {
+//   const items = jerseys.filter(j => j.club === club && !j.retro);
+//   document.getElementById('leagueJerseys').innerHTML = items.length ? items.map(j=>renderCard(j)).join('') : '<p class="col-span-4 text-center text-gray-400 py-8">No jerseys found for this club yet.</p>';
+//   lucide.createIcons();
+// }
 
 function renderProduct(id) {
   const j = jerseys.find(x=>x.id===id);
