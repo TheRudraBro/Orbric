@@ -1081,22 +1081,45 @@ function setupPaymentOptions() {
 }
 
 function validateAndPlaceOrder() {
-  const required = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'postal', 'country'];
-  const missing = required.filter(f => !checkoutData[f] || !checkoutData[f].trim());
+  // নতুন রিকোয়ার্ড ফিল্ডগুলো
+  const requiredFields = {
+    name: "Full Name",
+    phone: "Phone Number",
+    email: "Email Address",
+    zila: "Zila (District)",
+    upazila: "Upazila",
+    thana: "Thana",
+    addressDetails: "Detailed Address"
+  };
   
-  if(missing.length > 0) {
-    document.getElementById('checkoutError').textContent = `Please fill in all required fields (${missing.join(', ')})`;
-    document.getElementById('checkoutError').classList.remove('hidden');
+ 
+  if (checkoutData.paymentMethod === 'full') {
+    requiredFields.trxId = "Transaction ID";
+  }
+  
+  const missing = [];
+  for (const [key, label] of Object.entries(requiredFields)) {
+    if (!checkoutData[key] || !checkoutData[key].toString().trim()) {
+      missing.push(label);
+    }
+  }
+  
+  const errorEl = document.getElementById('checkoutError');
+  
+  if (missing.length > 0) {
+    errorEl.innerHTML = `Please fill in all required fields: <br/><span class="font-normal">${missing.join(', ')}</span>`;
+    errorEl.classList.remove('hidden');
     return;
   }
   
-  if(!validateEmail(checkoutData.email)) {
-    document.getElementById('checkoutError').textContent = 'Please enter a valid email address';
-    document.getElementById('checkoutError').classList.remove('hidden');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(checkoutData.email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.classList.remove('hidden');
     return;
   }
-  
-  checkout();
+
+  errorEl.classList.add('hidden');
+  checkout(); // সবকিছু ঠিক থাকলে অর্ডার প্লেস হয়ে যাবে
 }
 
 function validateEmail(email) {
