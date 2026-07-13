@@ -304,11 +304,46 @@ const jerseys = [
 
 
   // Retro
-  {id:101, club:'FC Barcelona', title:'Barcelona 2010-11 Iconic Kit', edition:'Retro', league:'La Liga', retro:true, colors:['#a50044','#004d98'], price:1350},
-  {id:102, club:'Real Madrid', title:'Real Madrid 2016-17 Classic', edition:'Retro', league:'La Liga', retro:true, colors:['#ffffff','#6c63ff'], price:1350},
-  {id:103, club:'AC Milan', title:'AC Milan 2006-07 Champions', edition:'Retro', league:'Serie A', retro:true, colors:['#fb090b','#000000'], price:1350},
-  {id:104, club:'Brazil', title:'Brazil 2002 World Cup Winner', edition:'Retro', league:'International', retro:true, colors:['#ffdf00','#009739'], price:1350},
-  {id:105, club:'Manchester United', title:'Manchester United 2008 UCL Final', edition:'Retro', league:'Premier League', retro:true, colors:['#da291c','#000000'], price:1350},
+  {id:101, 
+    club:'FC Barcelona', 
+    title:'Barcelona 2010-11 Iconic Kit', 
+    edition:'Retro', 
+    league:'La Liga', 
+    retro:true, 
+   image:'Retro/barcelona1011.jpg', 
+    price:1350},
+  {id:102, 
+    club:'Real Madrid', 
+    title:'Real Madrid 2016-17 Classic', 
+    edition:'Retro', 
+    league:'La Liga', 
+    retro:true, 
+    colors:['#ffffff','#6c63ff'], 
+    price:1350},
+  {id:103, 
+    club:'AC Milan', 
+    title:'AC Milan 2006-07 Champions', 
+    edition:'Retro', 
+    league:'Serie A', 
+    retro:true, 
+    colors:['#fb090b','#000000'], 
+    price:1350},
+  {id:104, 
+    club:'Brazil', 
+    title:'Brazil 2002 World Cup Winner', 
+    edition:'Retro', 
+    league:'International', 
+    retro:true, 
+    colors:['#ffdf00','#009739'], 
+    price:1350},
+  {id:105, 
+    club:'Manchester United', 
+    title:'Manchester United 2008 UCL Final', 
+    edition:'Retro', 
+    league:'Premier League', 
+    retro:true, 
+    colors:['#da291c','#000000'], 
+    price:1350},
 ];
 
 const leagueClubs = {
@@ -387,22 +422,52 @@ function navigate(page, data) {
 function renderHome() {
   const featured = jerseys.filter(j=>!j.retro).slice(0,8);
   document.getElementById('mainContent').innerHTML = `
-    <section class="hero-gradient py-16 md:py-24 px-4">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
-        <div class="flex-1 text-center md:text-left fade-in">
-          <p class="text-sm font-semibold text-gold uppercase tracking-widest mb-2">Season 25/26</p>
-          <h1 id="heroTagline" class="text-4xl md:text-6xl font-display font-700 text-royal leading-tight mb-4">${window.elementSdk.config.hero_tagline || defaultConfig.hero_tagline}</h1>
-          <p id="heroSubtitle" class="text-gray-600 text-lg mb-8">${window.elementSdk.config.hero_subtitle || defaultConfig.hero_subtitle}</p>
-          <div class="flex gap-3 justify-center md:justify-start">
-            <button onclick="navigate('player')" class="btn-primary text-white px-7 py-3 rounded-full font-semibold text-sm">Shop Now</button>
-            <button onclick="navigate('fan')" class="border-2 border-royal text-royal px-7 py-3 rounded-full font-semibold text-sm hover:bg-royal hover:text-white transition">Explore Collection</button>
-          </div>
+   <section class="relative py-12 md:py-20 px-4 overflow-hidden flex items-center justify-center bg-gradient-to-b from-surface to-gray-50 border-b border-gray-100">
+      <!-- Decorative background blur for premium effect -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-royal/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-gold/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+      
+      <div class="max-w-4xl mx-auto text-center fade-in z-10 relative">
+        <!-- Top Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm mb-5">
+            <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+            <p class="text-[10px] md:text-xs font-bold text-royal uppercase tracking-widest">Season 26/27 Collection</p>
         </div>
-        <div class="flex-1 flex justify-center fade-in">
-          <div class="relative w-72 h-80 md:w-96 md:h-[420px]">
-            ${renderJerseySVG(['#a50044','#004d98'], 'large')}
-            <div class="absolute -bottom-4 -right-4 w-32 h-40 opacity-60">${renderJerseySVG(['#ffffff','#d4af37'], 'small')}</div>
-          </div>
+        
+        <!-- Main Headline -->
+        <h1 id="heroTagline" class="text-4xl md:text-5xl lg:text-6xl font-display font-900 text-royal leading-tight tracking-tight mb-4">
+          ${window.elementSdk.config.hero_tagline || defaultConfig.hero_tagline}
+        </h1>
+        
+        <!-- Subtitle -->
+        <p id="heroSubtitle" class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+          ${window.elementSdk.config.hero_subtitle || defaultConfig.hero_subtitle}. Experience the authentic feel of the beautiful game with premium quality fabric.
+        </p>
+        
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <button onclick="navigate('player')" class="btn-primary text-white px-7 py-3 rounded-full font-bold text-sm hover:shadow-xl hover:shadow-royal/20 transition-all transform hover:-translate-y-1 w-full sm:w-auto">
+            Shop Player Edition
+          </button>
+          <button onclick="navigate('fan')" class="bg-white border border-gray-200 text-royal px-7 py-3 rounded-full font-bold text-sm hover:border-royal transition-all transform hover:-translate-y-1 shadow-sm w-full sm:w-auto">
+            Explore Fan Edition
+          </button>
+        </div>
+        
+        <!-- Premium Trust Indicators -->
+        <div class="mt-10 pt-6 border-t border-gray-200/60 flex flex-wrap justify-center items-center gap-6 md:gap-12 text-gray-500">
+            <div class="flex items-center gap-2 transition hover:text-royal">
+                <i data-lucide="shield-check" style="width:18px;height:18px"></i>
+                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">100% Authentic</span>
+            </div>
+            <div class="flex items-center gap-2 transition hover:text-royal">
+                <i data-lucide="truck" style="width:18px;height:18px"></i>
+                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Fast Delivery</span>
+            </div>
+            <div class="flex items-center gap-2 transition hover:text-royal">
+                <i data-lucide="award" style="width:18px;height:18px"></i>
+                <span class="text-xs md:text-sm font-semibold tracking-wider uppercase">Premium Quality</span>
+            </div>
         </div>
       </div>
     </section>
