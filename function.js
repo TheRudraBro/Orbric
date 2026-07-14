@@ -674,9 +674,67 @@ function updateCartCount() {
   if(count>0) { el.textContent=count; el.classList.remove('hidden'); } else el.classList.add('hidden');
 }
 
+// function checkout() {
+//   showToast('Order placed successfully! 🎉');
+//   cart = []; updateCartCount(); navigate('home');
+// }
+// Database Push
 function checkout() {
-  showToast('Order placed successfully! 🎉');
-  cart = []; updateCartCount(); navigate('home');
+  const submitBtn = document.querySelector('button[onclick="validateAndPlaceOrder()"]');
+  if(submitBtn) {
+      submitBtn.innerHTML = '<span class="animate-pulse">Processing Order...</span>';
+      submitBtn.disabled = true;
+  }
+
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const totalAmount = subtotal + checkoutData.deliveryCost;
+
+  // ডেটাবেসে যে ফরম্যাটে অর্ডার সেভ হবে
+  const orderData = {
+    customerInfo: checkoutData,
+    items: cart.map(item => ({
+        id: item.id,
+        title: item.title,
+        club: item.club,
+        size: item.size,
+        quantity: item.qty,
+        price: item.price
+    })),
+    payment: {
+        method: checkoutData.paymentMethod === 'full' ? 'Online Full Payment' : 'Cash on Delivery',
+        transactionId: checkoutData.trxId || 'N/A',
+        totalPaid: checkoutData.paymentMethod === 'full' ? totalAmount : checkoutData.deliveryCost,
+        totalOrderValue: totalAmount
+    },
+    status: 'Pending',
+    orderTimestamp: firebase.firestore.FieldValue.serverTimestamp() // সার্ভারের সঠিক সময়
+  };
+
+  // Firestore-এর 'orders' কালেকশনে ডেটা পুশ করা
+  db.collection("orders").add(orderData)
+    .then((docRef) => {
+        showToast('Order placed successfully! 🎉');
+        // কার্ট এবং ফর্ম রিসেট করা
+        cart = []; 
+        updateCartCount(); 
+        
+        // Checkout data reset
+        checkoutData = {
+          name: '', phone: '', email: '', zila: '', upazila: '', thana: '', addressDetails: '',
+          deliveryArea: 'inside', deliveryCost: 70, paymentMethod: 'full', trxId: ''
+        };
+        
+        navigate('home');
+    })
+    .catch((error) => {
+        console.error("Error adding document: ", error);
+        showToast('Error placing order. Please check console.');
+        if(submitBtn) {
+            submitBtn.innerHTML = '<i data-lucide="check-circle" style="width:18px;height:18px"></i> Place Order';
+            submitBtn.disabled = false;
+            lucide.createIcons();
+        }
+    });
 }
 
 function renderCheckout() {
